@@ -78,12 +78,18 @@ img {
   left: 50%;
   transform: translateX(-50%);
   z-index: 90;
-  background: rgba(255, 255, 255, 0.86);
+  background: rgba(20, 20, 22, 0.86);
   border-radius: 999px;
   padding: 8px 8px 8px 24px;
-  box-shadow: 0 16px 40px rgba(18, 19, 23, 0.08), 0 0 0 1px rgba(232, 235, 240, 0.78);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+body.theme-dark-header .header {
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 16px 40px rgba(18, 19, 23, 0.08), 0 0 0 1px rgba(232, 235, 240, 0.78);
 }
 
 .header-inner {
@@ -95,12 +101,20 @@ img {
 .brand-home {
   display: flex;
   align-items: center;
-  color: var(--text-soft);
+  color: #e0e0e0;
   transition: transform 220ms ease, color 220ms ease;
 }
 
 .brand-home:hover {
   transform: scale(1.05);
+  color: #ffffff;
+}
+
+body.theme-dark-header .brand-home {
+  color: var(--text-soft);
+}
+
+body.theme-dark-header .brand-home:hover {
   color: var(--blue);
 }
 
@@ -113,7 +127,7 @@ img {
 .nav a {
   display: inline-flex;
   align-items: center;
-  color: var(--text-soft);
+  color: #a0a0a0;
   font-size: 14.5px;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -121,13 +135,55 @@ img {
 }
 
 .nav a:hover {
-  color: var(--blue);
+  color: #ffffff;
   transform: translateY(-1px);
+}
+
+body.theme-dark-header .nav a {
+  color: var(--text-soft);
+}
+
+body.theme-dark-header .nav a:hover {
+  color: var(--blue);
 }
 
 .header-actions {
   display: flex;
   align-items: center;
+}
+
+.lang-switcher {
+  margin-right: 14px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  font-weight: 500;
+  color: #a0a0a0;
+  cursor: pointer;
+  font-size: 12.5px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.lang-btn.active {
+  font-weight: 700;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark-header .lang-btn {
+  color: var(--muted);
+}
+
+body.theme-dark-header .lang-btn.active {
+  color: var(--blue);
+  background-color: rgba(50, 121, 249, 0.08);
 }
 
 .contact-btn {
@@ -150,51 +206,92 @@ img {
 
 @media (max-width: 768px) {
   .header {
-    width: calc(100% - 32px);
-    max-width: 400px;
-    bottom: 16px;
-    padding: 6px 6px 6px 16px;
+    width: max-content;
+    bottom: 20px;
+    padding: 6px 6px 6px 20px;
   }
   
   .header-inner {
-    gap: 12px;
-    justify-content: space-between;
-    width: 100%;
+    gap: 16px;
+    justify-content: center;
+    width: auto;
   }
 
   .brand-home {
     flex-shrink: 0;
   }
 
-  .nav {
-    display: flex;
-    flex: 1;
-    min-width: 0;
-    gap: 12px;
-    overflow-x: auto;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-    padding: 0 4px; /* Slight padding for smooth scroll */
-  }
-
-  .nav::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
-  }
-
-  .nav a {
-    font-size: 13.5px;
-    white-space: nowrap;
-    flex-shrink: 0;
+  /* Hide desktop nav and contact button on mobile */
+  .nav, .contact-btn {
+    display: none;
   }
 
   .header-actions {
     flex-shrink: 0;
   }
 
-  .contact-btn {
-    padding: 8px 16px;
-    font-size: 13.5px;
+  .mobile-toggle-btn {
+    display: flex !important;
   }
+}
+
+/* MOBILE MENU OVERLAY */
+.mobile-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+body.theme-dark-header .mobile-toggle-btn {
+  color: var(--text);
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mobile-menu-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.mobile-nav-links a {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-links a:hover {
+  color: var(--blue);
 }
 
 /* HERO */

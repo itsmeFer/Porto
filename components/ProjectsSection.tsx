@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
-import { useMemo, useState, type CSSProperties } from "react";
+import { useMemo, useState, useEffect, useRef, type CSSProperties } from "react";
 import { projects } from "../data/portfolio";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../data/translations";
@@ -106,6 +106,35 @@ export default function ProjectsSection() {
   const [isSettling, setIsSettling] = useState(false);
   const [showcaseOpen, setShowcaseOpen] = useState(false);
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsDark(entry.isIntersecting);
+          if (entry.isIntersecting) {
+            document.body.classList.add("theme-dark-header");
+          } else {
+            document.body.classList.remove("theme-dark-header");
+          }
+        });
+      },
+      {
+        threshold: 0.15, // Trigger when 15% of the section is visible
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      document.body.classList.remove("theme-dark-header");
+    };
+  }, []);
 
   const { lang } = useLanguage();
   const t = translations[lang].projects;
@@ -192,15 +221,15 @@ export default function ProjectsSection() {
   };
 
   return (
-    <div className={styles.projectRevealWrapper}>
-      <div className={styles.projectFixed}>
-        <section
-          id="projects"
-        className={`section ${styles.projectsSliderSection}`}
+    <>
+      <section
+        id="projects"
+        ref={sectionRef}
+        className={`section ${styles.projectsSliderSection} ${isDark ? styles.isDarkTheme : ""}`}
         onMouseMove={handleMouseMove}
       >
-        <div className={styles.dotBackground}></div>
-        <div className={`container ${styles.scrollEntrance}`} style={{ position: "relative", zIndex: 1 }}>
+      <div className={styles.dotBackground}></div>
+      <div className={`container ${styles.scrollEntrance}`} style={{ position: "relative", zIndex: 1 }}>
 
           <div className={`${styles.projectSliderHead} section-head`}>
             <div className={styles.projectSliderTitle}>
@@ -482,8 +511,7 @@ export default function ProjectsSection() {
           onClose={() => setShowcaseOpen(false)}
         />
       )}
-      </div>
-    </div>
+    </>
   );
 }
 

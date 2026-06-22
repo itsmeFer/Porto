@@ -1,14 +1,19 @@
 "use client";
 
-import { Home } from "lucide-react";
+import { Home, Menu, X } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../data/translations";
+import { useState } from "react";
 
 export default function Header() {
   const { lang, setLang } = useLanguage();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = translations[lang].nav;
 
+  const closeMenu = () => setIsMobileMenuOpen(false);
+
   return (
+    <>
     <header className="header">
       <div className="header-inner">
         <a href="#" className="brand-home" aria-label="Home">
@@ -24,38 +29,16 @@ export default function Header() {
 
         <div className="header-actions" style={{ display: "flex", alignItems: "center" }}>
           {/* Beautiful and Sleek Language Switcher */}
-          <div className="lang-switcher" style={{ marginRight: "14px", display: "flex", gap: "4px", alignItems: "center" }}>
+          <div className="lang-switcher">
             <button
+              className={`lang-btn ${lang === "id" ? "active" : ""}`}
               onClick={() => setLang("id")}
-              style={{
-                background: "none",
-                border: "none",
-                fontWeight: lang === "id" ? "700" : "500",
-                color: lang === "id" ? "var(--blue)" : "var(--muted)",
-                cursor: "pointer",
-                fontSize: "12.5px",
-                padding: "2px 6px",
-                borderRadius: "6px",
-                transition: "all 0.2s ease",
-                backgroundColor: lang === "id" ? "rgba(50, 121, 249, 0.08)" : "transparent"
-              }}
             >
               ID
             </button>
             <button
+              className={`lang-btn ${lang === "en" ? "active" : ""}`}
               onClick={() => setLang("en")}
-              style={{
-                background: "none",
-                border: "none",
-                fontWeight: lang === "en" ? "700" : "500",
-                color: lang === "en" ? "var(--blue)" : "var(--muted)",
-                cursor: "pointer",
-                fontSize: "12.5px",
-                padding: "2px 6px",
-                borderRadius: "6px",
-                transition: "all 0.2s ease",
-                backgroundColor: lang === "en" ? "rgba(50, 121, 249, 0.08)" : "transparent"
-              }}
             >
               EN
             </button>
@@ -64,8 +47,30 @@ export default function Header() {
           <a href="#contact" className="contact-btn">
             {t.contactBtn}
           </a>
+
+          <button 
+            className="mobile-toggle-btn"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle Mobile Menu"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
     </header>
+
+    <div className={`mobile-menu-overlay ${isMobileMenuOpen ? "open" : ""}`}>
+      <nav className="mobile-nav-links">
+        <a href="#about" onClick={closeMenu}>{t.about}</a>
+        <a href="#skills" onClick={closeMenu}>{t.skills}</a>
+        <a href="#projects" onClick={closeMenu}>{t.projects}</a>
+        <a href="#journey" onClick={closeMenu}>{t.journey}</a>
+      </nav>
+      
+      <a href="#contact" className="btn btn-primary" onClick={closeMenu}>
+        {t.contactBtn}
+      </a>
+    </div>
+    </>
   );
 }
