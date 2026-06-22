@@ -1,0 +1,1664 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  width: 100%;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 78% 12%, rgba(45, 212, 191, 0.22), transparent 30%),
+    radial-gradient(circle at 18% 86%, rgba(20, 184, 166, 0.22), transparent 34%),
+    linear-gradient(135deg, #041210 0%, #082c28 46%, #020706 100%);
+  animation: modalEnter 750ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  overscroll-behavior: contain;
+}
+
+.noiseLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.18;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px);
+  background-size: 34px 34px, 46px 46px;
+}
+
+.backdropGlowOne,
+.backdropGlowTwo,
+.backdropGlowThree {
+  position: fixed;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(42px);
+}
+
+.backdropGlowOne {
+  width: clamp(220px, 34vw, 460px);
+  height: clamp(220px, 34vw, 460px);
+  right: 4%;
+  top: 2%;
+  background: rgba(45, 212, 191, 0.18);
+  animation: glowFloatOne 8s ease-in-out infinite;
+}
+
+.backdropGlowTwo {
+  width: clamp(220px, 32vw, 420px);
+  height: clamp(220px, 32vw, 420px);
+  left: 0;
+  bottom: 4%;
+  background: rgba(15, 118, 110, 0.32);
+  animation: glowFloatTwo 9s ease-in-out infinite;
+}
+
+.backdropGlowThree {
+  width: clamp(140px, 22vw, 260px);
+  height: clamp(140px, 22vw, 260px);
+  left: 48%;
+  top: 18%;
+  background: rgba(255, 255, 255, 0.05);
+  animation: glowFloatThree 10s ease-in-out infinite;
+}
+
+.modalGrid {
+  position: fixed;
+  inset: 0;
+  opacity: 0.075;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at 56% 48%, black 0%, transparent 74%);
+  -webkit-mask-image: radial-gradient(circle at 56% 48%, black 0%, transparent 74%);
+  animation: gridMove 20s linear infinite;
+}
+
+.closeButton {
+  position: fixed;
+  top: max(18px, env(safe-area-inset-top));
+  right: max(18px, env(safe-area-inset-right));
+  z-index: 30;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(210, 255, 248, 0.18);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.075);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  cursor: pointer;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.26);
+  transition:
+    transform 240ms ease,
+    background 240ms ease,
+    border-color 240ms ease;
+}
+
+.closeButton:hover {
+  transform: scale(1.06) rotate(4deg);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(210, 255, 248, 0.34);
+}
+
+.modalContent {
+  position: relative;
+  z-index: 2;
+  width: min(1220px, calc(100% - 48px));
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 34px 0 102px;
+  display: grid;
+  grid-template-columns: minmax(330px, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(18px, 2.2vw, 34px);
+  align-items: center;
+}
+
+.showcaseText {
+  width: 100%;
+  max-width: 560px;
+  min-width: 0;
+  animation: textEnter 900ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both;
+}
+
+.projectBadge {
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 13px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ddfff8;
+  background: rgba(45, 212, 191, 0.13);
+  border: 1px solid rgba(153, 246, 228, 0.2);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 12px 30px rgba(20, 184, 166, 0.14);
+}
+
+.projectBadge svg {
+  flex: 0 0 auto;
+}
+
+.showcaseText h2 {
+  margin: 18px 0 0;
+  color: #ffffff;
+  font-size: clamp(36px, 4.2vw, 58px);
+  line-height: 1.02;
+  letter-spacing: -0.06em;
+  font-weight: 850;
+  text-shadow: 0 18px 52px rgba(0, 0, 0, 0.34);
+  text-wrap: balance;
+}
+
+.showcaseText h2 span {
+  display: block;
+  color: #99f6e4;
+}
+
+.showcaseText p {
+  margin: 15px 0 0;
+  max-width: 530px;
+  color: rgba(226, 255, 250, 0.74);
+  font-size: 14.5px;
+  line-height: 1.62;
+}
+
+.techList {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.techList span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #e7fffb;
+  background: rgba(45, 212, 191, 0.13);
+  border: 1px solid rgba(153, 246, 228, 0.2);
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.featureGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 540px;
+}
+
+.featureGrid div {
+  min-width: 0;
+  padding: 13px;
+  border-radius: 19px;
+  background: rgba(255, 255, 255, 0.072);
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.12);
+}
+
+.featureGrid strong {
+  display: block;
+  color: #ffffff;
+  font-size: 12.5px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.featureGrid span {
+  display: block;
+  margin-top: 6px;
+  color: rgba(226, 255, 250, 0.66);
+  font-size: 11.5px;
+  line-height: 1.42;
+}
+
+.actionRow {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    filter 240ms ease;
+}
+
+.primaryButton {
+  color: #03211e;
+  background: linear-gradient(135deg, #ccfbf1, #2dd4bf);
+  box-shadow:
+    0 18px 42px rgba(45, 212, 191, 0.22),
+    0 0 0 7px rgba(45, 212, 191, 0.07);
+}
+
+.secondaryButton {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.085);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.helperBox {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 13px;
+  border-radius: 16px;
+  color: rgba(226, 255, 250, 0.72);
+  background: rgba(255, 255, 255, 0.065);
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.helperBox svg {
+  flex: 0 0 auto;
+}
+
+.showcaseStage {
+  position: relative;
+  width: 100%;
+  height: clamp(430px, 56vh, 580px);
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  perspective: 1600px;
+  cursor: grab;
+  overflow: visible;
+  animation: stageEnter 950ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
+}
+
+.showcaseStage:active {
+  cursor: grabbing;
+}
+
+.orbitRingOne,
+.orbitRingTwo,
+.orbitRingThree {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.orbitRingOne {
+  width: clamp(220px, 28vw, 360px);
+  height: clamp(220px, 28vw, 360px);
+  border: 1px solid rgba(153, 246, 228, 0.2);
+  box-shadow: 0 0 44px rgba(20, 184, 166, 0.08);
+  animation: orbitOne 18s linear infinite;
+}
+
+.orbitRingTwo {
+  width: clamp(300px, 38vw, 500px);
+  height: clamp(300px, 38vw, 500px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: orbitTwo 26s linear infinite;
+}
+
+.orbitRingThree {
+  width: clamp(360px, 48vw, 620px);
+  height: clamp(360px, 48vw, 620px);
+  border: 1px solid rgba(153, 246, 228, 0.13);
+  animation: orbitThree 32s linear infinite;
+}
+
+.deviceScene {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 640px;
+  height: clamp(390px, 45vw, 510px);
+  transform-style: preserve-3d;
+  transform:
+    rotateX(var(--rotate-x))
+    rotateY(var(--rotate-y))
+    rotateZ(var(--rotate-z))
+    scale(var(--zoom));
+  transition:
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 260ms ease;
+  will-change: transform;
+}
+
+.deviceScene.isDragging {
+  transition: transform 80ms linear;
+}
+
+.sceneShadow {
+  position: absolute;
+  left: 13%;
+  right: 13%;
+  bottom: 34px;
+  height: clamp(58px, 8vw, 96px);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(0, 0, 0, 0.58), transparent 70%),
+    radial-gradient(circle, rgba(45, 212, 191, 0.2), transparent 76%);
+  filter: blur(28px);
+  transform: translateZ(-150px) rotateX(80deg);
+}
+
+/* Chat dipindahkan ke bagian atas mockup, bukan menimpa HP/browser */
+.chatPreviewCard {
+  position: absolute;
+  top: 2%;
+  right: 4%;
+  z-index: 24;
+  width: min(310px, 42vw);
+  padding: 12px;
+  border-radius: 22px;
+  color: #ffffff;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.055)),
+    rgba(8, 44, 40, 0.72);
+  border: 1px solid rgba(210, 255, 248, 0.18);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.3),
+    0 0 42px rgba(45, 212, 191, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateZ(235px) rotateX(7deg) rotateY(-4deg);
+  transform-style: preserve-3d;
+  animation: chatFloatTop 6.4s ease-in-out infinite;
+}
+
+.chatPreviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chatAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #03211e;
+  background: linear-gradient(135deg, #ccfbf1, #2dd4bf);
+  box-shadow: 0 10px 24px rgba(45, 212, 191, 0.2);
+}
+
+.chatPreviewHeader strong {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.chatPreviewHeader span {
+  display: block;
+  margin-top: 3px;
+  color: rgba(226, 255, 250, 0.62);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.chatBubbleRow {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.chatBubbleLeft,
+.chatBubbleRight {
+  width: fit-content;
+  max-width: 88%;
+  padding: 8px 10px;
+  border-radius: 15px;
+  font-size: 10.5px;
+  line-height: 1.32;
+  font-weight: 700;
+}
+
+.chatBubbleLeft {
+  color: rgba(226, 255, 250, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom-left-radius: 5px;
+}
+
+.chatBubbleRight {
+  margin-left: auto;
+  color: #04211e;
+  background: linear-gradient(135deg, #ccfbf1, #5eead4);
+  border-bottom-right-radius: 5px;
+}
+
+.chatTyping {
+  width: fit-content;
+  margin-top: 9px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.chatTyping span {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(204, 251, 241, 0.75);
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+
+.chatTyping span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.chatTyping span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.browserCard {
+  position: absolute;
+  right: 0;
+  top: 55%;
+  z-index: 6;
+  width: clamp(300px, 31vw, 430px);
+  transform:
+    translate3d(0, -50%, 50px)
+    rotateX(2deg)
+    rotateY(-11deg)
+    rotateZ(2deg);
+  transform-style: preserve-3d;
+  animation: browserFloat 6.6s ease-in-out infinite;
+  opacity: 0.88;
+}
+
+.browserBar {
+  height: 27px;
+  border-radius: 18px 18px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)),
+    linear-gradient(135deg, #214f49, #0c201d);
+  border: 1px solid rgba(210, 255, 248, 0.15);
+  border-bottom: 0;
+}
+
+.browserBar span {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+}
+
+.browserBar span:nth-child(1) {
+  background: #ff6b7a;
+}
+
+.browserBar span:nth-child(2) {
+  background: #ffcb5b;
+}
+
+.browserBar span:nth-child(3) {
+  background: #68e391;
+}
+
+.browserBar small {
+  margin-left: 7px;
+  color: rgba(226, 255, 250, 0.62);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.browserScreen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  padding: 7px;
+  border-radius: 0 0 20px 20px;
+  background:
+    linear-gradient(135deg, #5d807a 0%, #142e2b 18%, #061412 48%, #2a5f57 100%);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.18),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.55),
+    0 28px 62px rgba(0, 0, 0, 0.36),
+    0 0 40px rgba(45, 212, 191, 0.11);
+  overflow: hidden;
+}
+
+.browserScreen::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: 2;
+  border-radius: 14px;
+  pointer-events: none;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.14), transparent 28%);
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.browserScreen img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 14px;
+  object-fit: cover;
+  object-position: top center;
+  background: #f0fffb;
+}
+
+.browserLabel,
+.phoneLabel {
+  width: max-content;
+  max-width: 90%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateZ(42px);
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: rgba(226, 255, 250, 0.9);
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-size: 10.5px;
+  font-weight: 900;
+  opacity: 0.95;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  white-space: nowrap;
+}
+
+.browserLabel {
+  bottom: -20px;
+}
+
+.phoneMockup {
+  position: absolute;
+  left: 28%;
+  top: 52%;
+  z-index: 14;
+  width: clamp(170px, 17vw, 225px);
+  aspect-ratio: 9 / 19.5;
+  transform:
+    translate3d(-50%, -50%, 145px)
+    rotateX(1.5deg)
+    rotateY(9deg)
+    rotateZ(-6deg);
+  transform-style: preserve-3d;
+  animation: phoneFloat 6s ease-in-out infinite;
+}
+
+.phoneAura {
+  position: absolute;
+  inset: -8px;
+  border-radius: 44px;
+  background:
+    radial-gradient(circle at 26% 14%, rgba(255, 255, 255, 0.22), transparent 26%),
+    linear-gradient(135deg, rgba(153, 246, 228, 0.2), transparent 46%);
+  filter: blur(13px);
+  opacity: 0.88;
+}
+
+.phoneFrame {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  border-radius: 38px;
+  background:
+    linear-gradient(145deg, #6b747c 0%, #161d20 34%, #334047 100%);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.28),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.5),
+    0 32px 70px rgba(0, 0, 0, 0.4),
+    0 0 44px rgba(45, 212, 191, 0.16);
+}
+
+.phoneFrame::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 31px;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 0 22px rgba(255, 255, 255, 0.08);
+  z-index: 3;
+}
+
+.phoneSpeaker {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  z-index: 8;
+  width: 62px;
+  height: 15px;
+  border-radius: 999px;
+  background: #05070a;
+  transform: translateX(-50%);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.14);
+}
+
+.phoneScreen {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 30px;
+  background: #f0fffb;
+}
+
+.phoneScreen img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+  background: #f0fffb;
+}
+
+.phoneLabel {
+  bottom: -29px;
+}
+
+.processChipOne,
+.processChipTwo,
+.processChipThree {
+  position: absolute;
+  z-index: 18;
+  width: max-content;
+  max-width: 165px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(222, 255, 250, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.22);
+  transform-style: preserve-3d;
+}
+
+.processChipOne svg,
+.processChipTwo svg,
+.processChipThree svg {
+  color: #99f6e4;
+}
+
+.processChipOne strong,
+.processChipTwo strong,
+.processChipThree strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.processChipOne span,
+.processChipTwo span,
+.processChipThree span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(226, 255, 250, 0.68);
+  font-size: 9.8px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.processChipOne {
+  left: 2%;
+  top: 24%;
+  transform: translateZ(170px) rotateY(8deg);
+  animation: chipFloatOne 5.8s ease-in-out infinite;
+}
+
+.processChipTwo {
+  right: 3%;
+  top: 33%;
+  transform: translateZ(180px) rotateY(-8deg);
+  animation: chipFloatTwo 6.2s ease-in-out infinite;
+}
+
+.processChipThree {
+  right: 12%;
+  bottom: 14%;
+  transform: translateZ(195px) rotateX(8deg);
+  animation: chipFloatThree 6.6s ease-in-out infinite;
+}
+
+.flowSection {
+  position: relative;
+  z-index: 3;
+  width: min(1220px, calc(100% - 48px));
+  margin: -82px auto 36px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.flowStep {
+  position: relative;
+  min-width: 0;
+  padding: 15px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.078);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+}
+
+.flowStep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 0%, rgba(45, 212, 191, 0.14), transparent 34%);
+  pointer-events: none;
+}
+
+.flowIndex {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  color: rgba(226, 255, 250, 0.16);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.flowIcon {
+  position: relative;
+  z-index: 2;
+  width: 35px;
+  height: 35px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #03211e;
+  background: linear-gradient(135deg, #99f6e4, #2dd4bf);
+}
+
+.flowStep strong {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-top: 12px;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.flowStep span {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-top: 7px;
+  color: rgba(226, 255, 250, 0.68);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes textEnter {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.97);
+    filter: blur(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes stageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(34px) scale(0.95);
+    filter: blur(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes gridMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 56px 56px;
+  }
+}
+
+@keyframes glowFloatOne {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-28px, 24px, 0) scale(1.08);
+  }
+}
+
+@keyframes glowFloatTwo {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(30px, -20px, 0) scale(1.1);
+  }
+}
+
+@keyframes glowFloatThree {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(16px, 20px, 0) scale(1.14);
+  }
+}
+
+@keyframes orbitOne {
+  from {
+    transform: rotateX(68deg) rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateX(68deg) rotateZ(360deg);
+  }
+}
+
+@keyframes orbitTwo {
+  from {
+    transform: rotateX(72deg) rotateZ(360deg);
+  }
+
+  to {
+    transform: rotateX(72deg) rotateZ(0deg);
+  }
+}
+
+@keyframes orbitThree {
+  from {
+    transform: rotateX(76deg) rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateX(76deg) rotateZ(-360deg);
+  }
+}
+
+@keyframes phoneFloat {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -12px;
+  }
+}
+
+@keyframes browserFloat {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 10px;
+  }
+}
+
+@keyframes chipFloatOne {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes chipFloatTwo {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 9px;
+  }
+}
+
+@keyframes chipFloatThree {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -11px;
+  }
+}
+
+@keyframes chatFloatTop {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes typingDot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 1180px) {
+  .modalContent {
+    width: min(1080px, calc(100% - 40px));
+    grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.05fr);
+    gap: 22px;
+  }
+
+  .showcaseText {
+    max-width: 520px;
+  }
+
+  .showcaseText h2 {
+    font-size: clamp(34px, 4vw, 50px);
+  }
+
+  .showcaseStage {
+    height: clamp(410px, 54vh, 530px);
+  }
+
+  .deviceScene {
+    max-width: 590px;
+    height: clamp(380px, 44vw, 480px);
+  }
+
+  .chatPreviewCard {
+    top: 1%;
+    right: 2%;
+    width: min(285px, 42vw);
+  }
+
+  .browserCard {
+    width: clamp(280px, 31vw, 395px);
+  }
+
+  .phoneMockup {
+    width: clamp(160px, 17vw, 210px);
+  }
+
+  .flowSection {
+    width: min(1080px, calc(100% - 40px));
+  }
+}
+
+@media (max-width: 980px) {
+  .modalContent {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding: 82px 0 142px;
+  }
+
+  .showcaseText {
+    max-width: 820px;
+  }
+
+  .showcaseText h2 {
+    max-width: 760px;
+    font-size: clamp(38px, 7vw, 56px);
+  }
+
+  .showcaseText p {
+    max-width: 720px;
+  }
+
+  .featureGrid {
+    max-width: 720px;
+  }
+
+  .showcaseStage {
+    height: clamp(570px, 74vw, 670px);
+  }
+
+  .deviceScene {
+    max-width: 760px;
+    height: clamp(540px, 68vw, 620px);
+  }
+
+  .chatPreviewCard {
+    top: 0;
+    right: 6%;
+    width: min(300px, 46vw);
+  }
+
+  .browserCard {
+    right: 1%;
+    top: 58%;
+    width: clamp(300px, 48vw, 450px);
+  }
+
+  .phoneMockup {
+    left: 32%;
+    top: 54%;
+    width: clamp(190px, 32vw, 250px);
+  }
+
+  .flowSection {
+    margin-top: -104px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .modalContent {
+    width: min(100%, calc(100% - 30px));
+    padding: 78px 0 126px;
+  }
+
+  .closeButton {
+    width: 42px;
+    height: 42px;
+  }
+
+  .showcaseText h2 {
+    font-size: clamp(32px, 10vw, 44px);
+    letter-spacing: -0.05em;
+  }
+
+  .showcaseText p {
+    font-size: 13.5px;
+    line-height: 1.58;
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .actionRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+
+  .helperBox {
+    width: 100%;
+    align-items: flex-start;
+    font-size: 11.5px;
+  }
+
+  .showcaseStage {
+    height: 590px;
+    margin-top: 4px;
+    cursor: default;
+  }
+
+  .deviceScene {
+    height: 560px;
+  }
+
+  .chatPreviewCard {
+    top: 0;
+    right: 50%;
+    width: min(310px, 88vw);
+    transform: translateX(50%) translateZ(235px) rotateX(7deg) rotateY(-4deg);
+  }
+
+  .phoneMockup {
+    left: 36%;
+    top: 55%;
+    width: min(215px, 55vw);
+  }
+
+  .browserCard {
+    right: -20px;
+    top: 62%;
+    width: min(310px, 76vw);
+    opacity: 0.74;
+  }
+
+  .processChipOne,
+  .processChipTwo,
+  .processChipThree {
+    padding: 9px 11px;
+    border-radius: 15px;
+  }
+
+  .processChipOne {
+    left: -4px;
+    top: 142px;
+    scale: 0.78;
+  }
+
+  .processChipTwo {
+    right: -8px;
+    top: 214px;
+    scale: 0.78;
+  }
+
+  .processChipThree {
+    right: 6%;
+    bottom: 84px;
+    scale: 0.78;
+  }
+
+  .flowSection {
+    width: min(100%, calc(100% - 30px));
+    margin-top: -92px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .modalContent {
+    width: min(100%, calc(100% - 22px));
+    padding-top: 74px;
+  }
+
+  .closeButton {
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .showcaseText h2 {
+    font-size: clamp(29px, 11vw, 38px);
+    letter-spacing: -0.048em;
+  }
+
+  .showcaseText p {
+    font-size: 13px;
+  }
+
+  .helperBox {
+    display: none;
+  }
+
+  .showcaseStage {
+    height: 555px;
+  }
+
+  .deviceScene {
+    height: 525px;
+  }
+
+  .chatPreviewCard {
+    width: min(290px, 88vw);
+    padding: 11px;
+    scale: 0.92;
+  }
+
+  .chatBubbleLeft,
+  .chatBubbleRight {
+    font-size: 10px;
+  }
+
+  .phoneMockup {
+    left: 35%;
+    top: 56%;
+    width: min(195px, 60vw);
+  }
+
+  .browserCard {
+    right: -42px;
+    top: 64%;
+    width: min(290px, 82vw);
+    opacity: 0.64;
+  }
+
+  .processChipOne,
+  .processChipTwo,
+  .processChipThree {
+    display: none;
+  }
+
+  .browserBar small {
+    display: none;
+  }
+
+  .orbitRingOne {
+    width: 220px;
+    height: 220px;
+  }
+
+  .orbitRingTwo {
+    width: 310px;
+    height: 310px;
+  }
+
+  .orbitRingThree {
+    width: 390px;
+    height: 390px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 981px) {
+  .modalContent {
+    padding: 24px 0 94px;
+  }
+
+  .showcaseText h2 {
+    font-size: clamp(32px, 3.5vw, 46px);
+  }
+
+  .showcaseText p {
+    margin-top: 13px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .techList {
+    margin-top: 15px;
+  }
+
+  .featureGrid {
+    margin-top: 15px;
+  }
+
+  .helperBox {
+    margin-top: 12px;
+  }
+
+  .showcaseStage {
+    height: 520px;
+  }
+
+  .deviceScene {
+    height: 500px;
+  }
+
+  .chatPreviewCard {
+    top: 0;
+    scale: 0.9;
+    transform-origin: top right;
+  }
+
+  .flowSection {
+    display: none;
+  }
+}
+
+.modalLeave {
+  animation: modalLeave 750ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.modalLeave .showcaseText {
+  animation: textLeave 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.modalLeave .showcaseStage {
+  animation: stageLeave 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes modalLeave {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+@keyframes textLeave {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.97);
+    filter: blur(10px);
+  }
+}
+
+@keyframes stageLeave {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.95);
+    filter: blur(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modalOverlay,
+  .backdropGlowOne,
+  .backdropGlowTwo,
+  .backdropGlowThree,
+  .modalGrid,
+  .showcaseText,
+  .showcaseStage,
+  .phoneMockup,
+  .browserCard,
+  .orbitRingOne,
+  .orbitRingTwo,
+  .orbitRingThree,
+  .processChipOne,
+  .processChipTwo,
+  .processChipThree,
+  .chatPreviewCard,
+  .chatTyping span {
+    animation: none !important;
+  }
+
+  .deviceScene {
+    transition: none !important;
+  }
+}
+
+/* =====================================================
+   MOBILE CAROUSEL � only shown on screens < 700px
+   ===================================================== */
+.mobileCarousel { display: none; }
+
+@media (max-width: 700px) {
+  .showcaseStage { display: none !important; }
+  .actionRow { display: none; }
+
+  .modalContent {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding: 82px 0 20px;
+  }
+
+  .mobileCarousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 16px 100px;
+    width: 100%;
+  }
+
+  .mobilePhoneWrap {
+    position: relative;
+    width: min(250px, 64vw);
+    filter: drop-shadow(0 32px 60px rgba(0, 0, 0, 0.65));
+  }
+
+  .mobilePhoneGlow {
+    position: absolute;
+    inset: -30px;
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(99, 200, 160, 0.25), transparent 70%),
+      radial-gradient(circle at 30% 20%, rgba(52, 211, 153, 0.12), transparent 60%);
+    filter: blur(28px);
+    z-index: 0;
+  }
+
+  .mobilePhoneFrame {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 40px;
+    padding: 8px;
+    background: linear-gradient(145deg, #444a53 0%, #111317 34%, #272c35 100%);
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.15),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.75),
+      0 32px 70px rgba(0, 0, 0, 0.7),
+      0 0 40px rgba(99, 200, 160, 0.18);
+    animation: mobilePhoneFloat 4s ease-in-out infinite;
+  }
+
+  .mobileSpeaker {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    z-index: 8;
+    width: 56px;
+    height: 13px;
+    border-radius: 999px;
+    background: #050608;
+    transform: translateX(-50%);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  }
+
+  .mobilePhoneScreen {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 32px;
+    background: #111317;
+  }
+
+  .mobileScreenImg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 600ms ease, transform 600ms ease;
+  }
+
+  .mobileScreenImgActive { opacity: 1; transform: scale(1); }
+
+  .mobileFloatingCard {
+    position: absolute;
+    top: -18px;
+    right: -16px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 10px;
+    border-radius: 14px;
+    background: rgba(20, 22, 26, 0.92);
+    border: 1px solid rgba(99, 200, 160, 0.3);
+    backdrop-filter: blur(16px);
+    color: #fff;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+    animation: mobileCardFloat 3.5s ease-in-out infinite;
+    white-space: nowrap;
+  }
+
+  .mobileFloatingCardIcon {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #63c8a0, #34d399);
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .mobileFloatingCard strong { display: block; font-size: 10px; font-weight: 700; line-height: 1.2; }
+  .mobileFloatingCard span { display: block; font-size: 8.5px; color: rgba(255,255,255,0.5); font-weight: 600; margin-top: 1px; }
+
+  .mobileLiveBadge {
+    font-size: 8px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(99, 200, 160, 0.2);
+    border: 1px solid rgba(99, 200, 160, 0.4);
+    color: #63c8a0 !important;
+    margin-top: 0 !important;
+    flex-shrink: 0;
+  }
+
+  .mobileScreenLabel {
+    position: absolute;
+    bottom: -16px; left: -6px;
+    z-index: 10;
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: rgba(20, 22, 26, 0.88);
+    border: 1px solid rgba(99, 200, 160, 0.2);
+    backdrop-filter: blur(12px);
+    color: #63c8a0;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    animation: mobileCardFloat 4s ease-in-out infinite 0.8s;
+    white-space: nowrap;
+}
+
+  .mobileDots { display: flex; align-items: center; gap: 6px; }
+
+  .mobileDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 300ms ease;
+    padding: 0;
+  }
+
+  .mobileDotActive {
+    width: 22px;
+    background: #63c8a0;
+    box-shadow: 0 0 10px rgba(99, 200, 160, 0.5);
+  }
+
+  .mobileActions { display: flex; gap: 10px; width: 100%; max-width: 380px; }
+
+  .mobileActions .primaryButton,
+  .mobileActions .secondaryButton {
+    flex: 1;
+    justify-content: center;
+    font-size: 12.5px;
+    padding: 11px 14px;
+  }
+}
+
+@keyframes mobilePhoneFloat {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes mobileCardFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Force override on mobile to fix layout */
+@media (max-width: 700px) {
+  .modalContent {
+    grid-template-columns: 1fr !important;
+    align-items: start !important;
+    padding: 82px 0 20px !important;
+  }
+
+  .showcaseStage { display: none !important; }
+  .actionRow { display: none !important; }
+  .mobileCarousel { display: flex !important; }
+}

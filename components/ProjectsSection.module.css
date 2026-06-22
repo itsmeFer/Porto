@@ -1,0 +1,1711 @@
+
+.projectRevealWrapper {
+    position: relative;
+    height: 100dvh;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    width: 100%;
+    z-index: 5;
+}
+
+.projectFixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+}
+
+.projectsSliderSection {
+    position: relative;
+    overflow: hidden;
+    background-color: #0d0d0d;
+    color: #ffffff;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.scrollEntrance {
+    animation: fade-up-scale both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 35%;
+    will-change: transform, opacity, filter;
+}
+
+@keyframes fade-up-scale {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.92);
+        filter: blur(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+
+.dotBackground {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    /* Base background dots (dim) */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.dotBackground::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Bright background dots (spotlight) */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        black 0%,
+        transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        black 0%,
+        transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.projectsSliderSection:hover .dotBackground::after {
+    opacity: 1;
+}
+
+.projectsSliderSection :global(.project-card) {
+    background: rgba(30, 30, 32, 0.45);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6);
+}
+
+.projectsSliderSection :global(.project-content h3) {
+    color: #ffffff;
+}
+
+.projectsSliderSection :global(.project-content p) {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.projectsSliderSection :global(.project-tech span) {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.projectsSliderSection h2 {
+    color: #ffffff;
+}
+
+.projectSliderHead {
+    margin-bottom: 34px;
+    min-height: 320px;
+    height: auto;
+}
+
+.projectSliderTitle {
+    margin-bottom: 0;
+}
+
+.projectSliderTitle h2 {
+    max-width: 760px;
+}
+
+.projectSliderTitle p {
+    max-width: 760px;
+    color: #a0a0a0;
+}
+
+.scrollRevealContainer {
+    margin: 0 auto;
+    max-width: 900px;
+    text-align: center;
+}
+
+.scrollRevealText {
+    font-size: clamp(28px, 4.5vw, 48px);
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(to right, #ffffff, #ffffff) no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 0% 100%;
+    animation: scroll-reveal linear both;
+    animation-timeline: view();
+    animation-range: cover 10% cover 50%;
+}
+
+@keyframes scroll-reveal {
+    from {
+        background-size: 0% 100%;
+    }
+    to {
+        background-size: 100% 100%;
+    }
+}
+
+/* ACTIVE PROJECT TEXT ANIMATION */
+
+.textRevealGroup {
+    position: relative;
+}
+
+.projectLabel {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+    animation: projectTextIn 680ms cubic-bezier(0.16, 1, 0.3, 1) 40ms both;
+}
+
+.projectHeadline {
+    opacity: 0;
+    transform: translateY(24px) scale(0.975);
+    animation: projectTextIn 760ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+}
+
+.projectDescription {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: projectTextIn 780ms cubic-bezier(0.16, 1, 0.3, 1) 210ms both;
+}
+
+.activeProjectTech {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.activeProjectTech span {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(50, 121, 249, 0.15);
+    border: 1px solid rgba(50, 121, 249, 0.3);
+    color: #6da5ff;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 600;
+    animation:
+        projectTechIn 640ms cubic-bezier(0.16, 1, 0.3, 1) calc(330ms + var(--tech-delay)) both;
+}
+
+/* SLIDER */
+
+.projectSliderStageWrap {
+    position: relative;
+    width: 100%;
+}
+
+.projectSliderStage {
+    position: relative;
+    height: 600px;
+    display: grid;
+    place-items: center;
+    perspective: 1200px;
+    overflow: visible;
+}
+
+.projectSlideCard {
+    position: absolute;
+    width: min(430px, 82vw);
+    min-height: 474px;
+    cursor: pointer;
+    transform:
+        translateX(calc(var(--slide-offset) * 360px))
+        scale(0.82)
+        rotateY(calc(var(--slide-offset) * -8deg));
+    opacity: 0;
+    filter: blur(18px) saturate(0.74);
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform, opacity, filter;
+    transition:
+        transform 680ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 520ms ease,
+        filter 580ms ease,
+        box-shadow 580ms ease,
+        border-color 580ms ease;
+}
+
+.projectSlideCard:hover {
+    transform:
+        translateX(calc(var(--slide-offset) * 360px))
+        scale(0.82)
+        rotateY(calc(var(--slide-offset) * -8deg)) !important;
+    box-shadow:
+        0 1px 3px rgba(18, 19, 23, 0.06),
+        0 18px 48px rgba(18, 19, 23, 0.055) !important;
+}
+
+.projectSlideCard:hover :global(.project-image) {
+    transform: scale(1) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    filter: saturate(1) contrast(1.02) !important;
+}
+
+/* ACTIVE CARD */
+
+.projectSlideCard.isActive {
+    z-index: 5;
+    opacity: 1;
+    filter: blur(0) saturate(1) !important;
+    pointer-events: auto;
+    transform:
+        translateX(0)
+        translateY(0)
+        scale(1)
+        rotateY(0deg) !important;
+    box-shadow:
+        0 4px 10px rgba(18, 19, 23, 0.07),
+        0 32px 90px rgba(18, 19, 23, 0.16) !important;
+}
+
+.projectSlideCard.isActive:hover {
+    filter: blur(0) saturate(1) !important;
+    transform:
+        translateX(0)
+        translateY(0)
+        scale(1)
+        rotateY(0deg) !important;
+}
+
+.projectSlideCard.isActive :global(.project-image) {
+    transform: scale(1) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    filter: saturate(1.05) contrast(1.03) !important;
+}
+
+.projectSlideCard.isActive :global(.project-content),
+.projectSlideCard.isActive :global(.project-content h3),
+.projectSlideCard.isActive :global(.project-content p),
+.projectSlideCard.isActive :global(.project-tech),
+.projectSlideCard.isActive :global(.project-actions) {
+    opacity: 1 !important;
+    filter: blur(0) !important;
+}
+
+/* SIDE CARD */
+
+.projectSlideCard.isSide {
+    z-index: 3;
+    opacity: 0.44;
+    filter: blur(4px) saturate(0.78) !important;
+    pointer-events: auto;
+}
+
+.projectSlideCard.isSide :global(.project-content),
+.projectSlideCard.isSide :global(.project-content h3),
+.projectSlideCard.isSide :global(.project-content p),
+.projectSlideCard.isSide :global(.project-tech),
+.projectSlideCard.isSide :global(.project-actions) {
+    opacity: 0.55 !important;
+    filter: blur(0) !important;
+    transition: opacity 520ms ease;
+}
+
+.projectSlideCard.isSide:hover {
+    z-index: 8;
+    opacity: 1;
+    filter: blur(0) saturate(1) !important;
+    transform:
+        translateX(calc(var(--slide-offset) * 360px))
+        scale(0.86)
+        rotateY(calc(var(--slide-offset) * -8deg)) !important;
+    box-shadow:
+        0 4px 10px rgba(18, 19, 23, 0.07),
+        0 28px 80px rgba(18, 19, 23, 0.14) !important;
+}
+
+.projectSlideCard.isSide:hover :global(.project-image) {
+    transform: scale(1) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    filter: saturate(1.05) contrast(1.03) !important;
+}
+
+.projectSlideCard.isSide:hover :global(.project-content),
+.projectSlideCard.isSide:hover :global(.project-content h3),
+.projectSlideCard.isSide:hover :global(.project-content p),
+.projectSlideCard.isSide:hover :global(.project-tech),
+.projectSlideCard.isSide:hover :global(.project-actions) {
+    opacity: 1 !important;
+    filter: blur(0) !important;
+}
+
+.projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive {
+    opacity: 0.46;
+    filter: blur(4px) saturate(0.78) !important;
+    box-shadow:
+        0 1px 3px rgba(18, 19, 23, 0.06),
+        0 18px 48px rgba(18, 19, 23, 0.055) !important;
+}
+
+.projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive :global(.project-content),
+.projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive :global(.project-tech),
+.projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive :global(.project-actions) {
+    opacity: 0.55 !important;
+}
+
+.projectSlideCard.isHidden {
+    opacity: 0 !important;
+    filter: blur(18px) saturate(0.74) !important;
+    pointer-events: none;
+    z-index: 0;
+    transition:
+        opacity 280ms ease,
+        filter 280ms ease,
+        transform 0ms 280ms,
+        box-shadow 0ms 280ms,
+        border-color 0ms 280ms !important;
+}
+
+/* SETTLING MODE */
+
+.projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover {
+    z-index: 3;
+    opacity: 0.44;
+    filter: blur(4px) saturate(0.78) !important;
+    transform:
+        translateX(calc(var(--slide-offset) * 360px))
+        scale(0.82)
+        rotateY(calc(var(--slide-offset) * -8deg)) !important;
+    box-shadow:
+        0 1px 3px rgba(18, 19, 23, 0.06),
+        0 18px 48px rgba(18, 19, 23, 0.055) !important;
+}
+
+.projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover :global(.project-image) {
+    transform: scale(1) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    filter: saturate(1) contrast(1.02) !important;
+}
+
+.projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover :global(.project-content),
+.projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover :global(.project-content h3),
+.projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover :global(.project-content p),
+.projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover :global(.project-tech),
+.projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover :global(.project-actions) {
+    opacity: 0.55 !important;
+}
+
+.projectSliderStageWrap.isSettling .projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive {
+    z-index: 5;
+    opacity: 1 !important;
+    filter: blur(0) saturate(1) !important;
+    transform:
+        translateX(0)
+        translateY(0)
+        scale(1)
+        rotateY(0deg) !important;
+    box-shadow:
+        0 4px 10px rgba(18, 19, 23, 0.07),
+        0 32px 90px rgba(18, 19, 23, 0.16) !important;
+}
+
+.projectSliderStageWrap.isSettling .projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive :global(.project-content),
+.projectSliderStageWrap.isSettling .projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive :global(.project-tech),
+.projectSliderStageWrap.isSettling .projectSliderStage:has(.projectSlideCard.isSide:hover) .projectSlideCard.isActive :global(.project-actions) {
+    opacity: 1 !important;
+}
+
+/* SIDE ARROWS */
+
+.sideArrowButton {
+    position: absolute;
+    top: 50%;
+    z-index: 20;
+    width: 56px;
+    height: 56px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(30, 30, 32, 0.6);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    box-shadow:
+        0 14px 38px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition:
+        transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+        background 260ms ease,
+        color 260ms ease,
+        box-shadow 260ms ease,
+        border-color 260ms ease;
+}
+
+.sideArrowButton:hover {
+    transform: translateY(-50%) scale(1.08);
+    background: #ffffff;
+    color: #101014;
+    border-color: #ffffff;
+    box-shadow:
+        0 20px 52px rgba(0, 0, 0, 0.5),
+        0 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.sideArrowButton:active {
+    transform: translateY(-50%) scale(0.96);
+}
+
+.sideArrowLeft {
+    left: 22px;
+}
+
+.sideArrowRight {
+    right: 22px;
+}
+
+/* DOTS */
+
+.projectSliderDots {
+    position: relative;
+    z-index: 20;
+    margin-top: 24px;
+    padding-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+}
+
+.projectSliderDots button {
+    width: 9px;
+    height: 9px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition:
+        width 260ms cubic-bezier(0.16, 1, 0.3, 1),
+        background 260ms ease,
+        transform 260ms ease;
+}
+
+.projectSliderDots button.isActiveDot {
+    width: 34px;
+    background: #ffffff;
+}
+
+.projectSliderDots button:hover {
+    transform: scale(1.12);
+}
+
+/* PROJECT CARD BUTTON FIX */
+
+.viewProjectButton {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 18px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: #101014 !important;
+    color: #ffffff !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 9px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    flex: 0 0 auto !important;
+    cursor: pointer !important;
+    box-shadow: 0 10px 24px rgba(18, 19, 23, 0.14) !important;
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        background 220ms ease !important;
+}
+
+.viewProjectButton:hover {
+    transform: translateY(-2px) !important;
+    background: #000000 !important;
+    box-shadow: 0 14px 34px rgba(18, 19, 23, 0.22) !important;
+}
+
+.viewProjectButton svg {
+    flex: 0 0 auto !important;
+}
+
+.projectIconButton {
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: #101014 !important;
+    color: #ffffff !important;
+    display: grid !important;
+    place-items: center !important;
+    flex: 0 0 auto !important;
+    cursor: pointer !important;
+    box-shadow: 0 10px 24px rgba(18, 19, 23, 0.14) !important;
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        background 220ms ease !important;
+}
+
+.projectIconButton:hover {
+    transform: translateY(-2px) !important;
+    background: #000000 !important;
+    box-shadow: 0 14px 34px rgba(18, 19, 23, 0.22) !important;
+}
+
+.projectIconButton svg {
+    flex: 0 0 auto !important;
+}
+
+/* PROJECT IMAGE FALLBACK / HIGHLIGHT */
+
+.projectImageShell {
+    position: relative;
+    overflow: hidden;
+    background: #f7fbff !important;
+}
+
+.projectImage {
+    position: relative;
+    z-index: 3;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    background: #f7fbff !important;
+    padding: 8px !important;
+    transform: scale(1) !important;
+}
+
+.projectImageShell :global(.project-image) {
+    object-fit: contain !important;
+    object-position: center center !important;
+    background: #f7fbff !important;
+    padding: 8px !important;
+    transform: scale(1) !important;
+}
+
+.projectSlideCard:hover .projectImageShell :global(.project-image),
+.projectSlideCard.isActive .projectImageShell :global(.project-image),
+.projectSlideCard.isSide:hover .projectImageShell :global(.project-image) {
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: scale(1) !important;
+}
+
+.projectImageFailed {
+    display: none !important;
+}
+
+.projectHighlightFallback {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(circle at 68% 22%, rgba(0, 191, 165, 0.38), transparent 34%),
+        radial-gradient(circle at 16% 84%, rgba(0, 150, 136, 0.34), transparent 34%),
+        linear-gradient(135deg, #021917 0%, #07342f 48%, #020f0e 100%);
+}
+
+.highlightGrid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.18;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+    background-size: 30px 30px;
+    mask-image: radial-gradient(circle at center, black 0%, transparent 76%);
+    -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 76%);
+}
+
+.highlightGlowOne,
+.highlightGlowTwo {
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(22px);
+}
+
+.highlightGlowOne {
+    width: 170px;
+    height: 170px;
+    right: -42px;
+    top: -44px;
+    background: rgba(0, 191, 165, 0.38);
+}
+
+.highlightGlowTwo {
+    width: 160px;
+    height: 160px;
+    left: -48px;
+    bottom: -52px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.highlightBadge {
+    position: relative;
+    z-index: 3;
+    width: 86px;
+    height: 86px;
+    border-radius: 28px;
+    display: grid;
+    place-items: center;
+    color: #eafffb;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06)),
+        rgba(0, 150, 136, 0.32);
+    border: 1px solid rgba(210, 255, 248, 0.22);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 22px 54px rgba(0, 0, 0, 0.26),
+        0 0 42px rgba(0, 191, 165, 0.18);
+    backdrop-filter: blur(18px);
+    animation: highlightFloat 5.2s ease-in-out infinite;
+}
+
+.highlightContent {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    z-index: 3;
+    padding: 14px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+}
+
+.highlightContent span {
+    display: block;
+    color: rgba(226, 255, 250, 0.78);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.highlightContent strong {
+    display: block;
+    margin-top: 6px;
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+}
+
+.highlightContent small {
+    display: block;
+    margin-top: 8px;
+    color: rgba(226, 255, 250, 0.68);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ROYAL PROJECT CARD HERO */
+
+.royalProjectImageShell {
+    background: #042b27 !important;
+}
+
+.royalHighlightHero {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle at 82% 24%, rgba(0, 191, 165, 0.52), transparent 32%),
+        radial-gradient(circle at 18% 88%, rgba(255, 255, 255, 0.16), transparent 34%),
+        linear-gradient(135deg, #052522 0%, #009688 54%, #031412 100%);
+}
+
+.royalHeroGrid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.14;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 26px 26px;
+    mask-image: radial-gradient(circle at 64% 42%, black 0%, transparent 76%);
+    -webkit-mask-image: radial-gradient(circle at 64% 42%, black 0%, transparent 76%);
+}
+
+.royalHeroGlowOne,
+.royalHeroGlowTwo {
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(22px);
+}
+
+.royalHeroGlowOne {
+    width: 180px;
+    height: 180px;
+    right: -42px;
+    top: -58px;
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.royalHeroGlowTwo {
+    width: 190px;
+    height: 190px;
+    left: -70px;
+    bottom: -74px;
+    background: rgba(0, 191, 165, 0.42);
+}
+
+.royalHeroText {
+    position: absolute;
+    left: 22px;
+    top: 24px;
+    right: 165px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.royalHeroText strong {
+    display: block;
+    color: #ffffff;
+    font-size: 23px;
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+    text-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+    max-width: 185px;
+}
+
+.royalHeroText span {
+    display: none !important;
+}
+
+.royalHeroText small {
+    display: block;
+    margin-top: 10px;
+    color: rgba(234, 255, 251, 0.82);
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 700;
+    max-width: 185px;
+}
+
+.royalMiniPhone {
+    position: absolute;
+    z-index: 4;
+    right: 22px;
+    top: 20px;
+    width: 118px;
+    height: 210px;
+    padding: 6px;
+    border-radius: 25px;
+    background:
+        linear-gradient(145deg, #5c6671 0%, #151a20 34%, #303a44 100%);
+    box-shadow:
+        inset 1px 1px 0 rgba(255, 255, 255, 0.28),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.5),
+        0 26px 58px rgba(0, 0, 0, 0.34),
+        0 0 34px rgba(0, 191, 165, 0.2);
+    transform: rotate(7deg);
+    animation: royalPhoneFloat 5.4s ease-in-out infinite;
+}
+
+.royalMiniPhone::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 21px;
+    pointer-events: none;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        inset 0 0 22px rgba(255, 255, 255, 0.08);
+    z-index: 2;
+}
+
+.royalMiniNotch {
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    z-index: 6;
+    width: 38px;
+    height: 12px;
+    border-radius: 999px;
+    background: #05070a;
+    transform: translateX(-50%);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.14);
+}
+
+.royalMiniPhone img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 20px;
+    object-fit: fill;
+    object-position: top center;
+    background: #eef7f5;
+}
+
+.projectSlideCard.isActive .royalHighlightHero {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.projectSlideCard.isSide .royalMiniPhone {
+    animation-play-state: paused;
+}
+
+/* KEYFRAMES */
+
+@keyframes projectTextIn {
+    0% {
+        opacity: 0;
+        transform: translateY(26px) scale(0.965);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.004);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes projectTechIn {
+    0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.92);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateY(-1px) scale(1.018);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes highlightFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+@keyframes royalPhoneFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(7deg);
+    }
+
+    50% {
+        transform: translateY(-9px) rotate(4deg);
+    }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1180px) {
+    .projectSlideCard {
+        transform:
+            translateX(calc(var(--slide-offset) * 310px))
+            scale(0.8)
+            rotateY(calc(var(--slide-offset) * -7deg));
+    }
+
+    .projectSlideCard:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 310px))
+            scale(0.8)
+            rotateY(calc(var(--slide-offset) * -7deg)) !important;
+    }
+
+    .projectSlideCard.isSide:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 310px))
+            scale(0.86)
+            rotateY(calc(var(--slide-offset) * -7deg)) !important;
+    }
+
+    .projectSlideCard.isActive,
+    .projectSlideCard.isActive:hover {
+        transform:
+            translateX(0)
+            translateY(0)
+            scale(1)
+            rotateY(0deg) !important;
+    }
+
+    .projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 310px))
+            scale(0.8)
+            rotateY(calc(var(--slide-offset) * -7deg)) !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .projectSliderHead {
+        margin-bottom: 28px;
+        height: 350px;
+    }
+
+    .projectSliderStage {
+        height: 540px;
+    }
+
+    .projectSlideCard {
+        width: min(390px, 86vw);
+        transform:
+            translateX(calc(var(--slide-offset) * 240px))
+            scale(0.78)
+            rotateY(calc(var(--slide-offset) * -5deg));
+    }
+
+    .projectSlideCard:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 240px))
+            scale(0.78)
+            rotateY(calc(var(--slide-offset) * -5deg)) !important;
+    }
+
+    .projectSlideCard.isSide:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 240px))
+            scale(0.84)
+            rotateY(calc(var(--slide-offset) * -5deg)) !important;
+    }
+
+    .projectSlideCard.isActive,
+    .projectSlideCard.isActive:hover {
+        transform:
+            translateX(0)
+            translateY(0)
+            scale(1)
+            rotateY(0deg) !important;
+    }
+
+    .projectSlideCard.isSide {
+        opacity: 0.24;
+        filter: blur(6px) saturate(0.72) !important;
+    }
+
+    .projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 240px))
+            scale(0.78)
+            rotateY(calc(var(--slide-offset) * -5deg)) !important;
+    }
+
+    .sideArrowButton {
+        width: 50px;
+        height: 50px;
+    }
+
+    .sideArrowLeft {
+        left: 8px;
+    }
+
+    .sideArrowRight {
+        right: 8px;
+    }
+}
+
+@media (max-width: 620px) {
+    .projectSliderHead {
+        height: 380px;
+    }
+
+    .projectSliderStage {
+        height: 570px;
+    }
+
+    .projectSlideCard {
+        width: min(350px, 88vw);
+        min-height: auto;
+        transform:
+            translateX(calc(var(--slide-offset) * 165px))
+            scale(0.72)
+            rotateY(calc(var(--slide-offset) * -4deg));
+    }
+
+    .projectSlideCard:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 165px))
+            scale(0.72)
+            rotateY(calc(var(--slide-offset) * -4deg)) !important;
+    }
+
+    .projectSlideCard.isSide:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 165px))
+            scale(0.78)
+            rotateY(calc(var(--slide-offset) * -4deg)) !important;
+    }
+
+    .projectSlideCard.isActive,
+    .projectSlideCard.isActive:hover {
+        transform:
+            translateX(0)
+            translateY(0)
+            scale(1)
+            rotateY(0deg) !important;
+    }
+
+    .projectSlideCard.isSide {
+        opacity: 0.16;
+        filter: blur(8px) saturate(0.7) !important;
+    }
+
+    .projectSliderStageWrap.isSettling .projectSlideCard.isSide:hover {
+        transform:
+            translateX(calc(var(--slide-offset) * 165px))
+            scale(0.72)
+            rotateY(calc(var(--slide-offset) * -4deg)) !important;
+    }
+
+    .sideArrowButton {
+        width: 44px;
+        height: 44px;
+    }
+
+    .sideArrowLeft {
+        left: -4px;
+    }
+
+    .sideArrowRight {
+        right: -4px;
+    }
+
+    .activeProjectTech {
+        gap: 7px;
+    }
+
+    .activeProjectTech span {
+        font-size: 11px;
+        padding: 7px 10px;
+    }
+
+    .royalHeroText {
+        left: 18px;
+        top: 22px;
+        right: 126px;
+    }
+
+    .royalHeroText strong {
+        font-size: 20px;
+        max-width: 150px;
+    }
+
+    .royalHeroText span {
+        display: none !important;
+    }
+
+    .royalHeroText small {
+        font-size: 11px;
+        max-width: 150px;
+    }
+
+    .royalMiniPhone {
+        right: 16px;
+        top: 20px;
+        width: 104px;
+        height: 188px;
+    }
+}
+
+.dokterProjectImageShell {
+  background:
+    radial-gradient(circle at 72% 20%, rgba(79, 107, 255, 0.24), transparent 34%),
+    linear-gradient(135deg, #101735 0%, #17204a 52%, #070b1d 100%) !important;
+}
+
+.dokterProjectImageShell .projectHighlightFallback {
+  background:
+    radial-gradient(circle at 68% 22%, rgba(79, 107, 255, 0.36), transparent 34%),
+    radial-gradient(circle at 16% 84%, rgba(23, 32, 74, 0.52), transparent 34%),
+    linear-gradient(135deg, #101735 0%, #17204a 52%, #070b1d 100%) !important;
+}
+
+.dokterProjectImageShell :global(.project-image) {
+  object-fit: contain !important;
+  object-position: top center !important;
+  background: #eef3ff !important;
+  padding: 6px !important;
+}
+
+/* HOMECARE SINGLE PHONE MOCKUP - CLEAN ROYAL STYLE */
+
+.homecareProjectImageShell {
+    background: #042b27 !important;
+}
+
+.homecareRoyalHero {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    overflow: hidden;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle at 82% 24%, rgba(0, 191, 165, 0.46), transparent 32%),
+        radial-gradient(circle at 18% 88%, rgba(255, 255, 255, 0.13), transparent 34%),
+        linear-gradient(135deg, #052522 0%, #009688 54%, #031412 100%);
+}
+
+.homecareRoyalGrid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.14;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 26px 26px;
+    mask-image: radial-gradient(circle at 64% 42%, black 0%, transparent 76%);
+    -webkit-mask-image: radial-gradient(circle at 64% 42%, black 0%, transparent 76%);
+}
+
+.homecareRoyalGlowOne,
+.homecareRoyalGlowTwo {
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(22px);
+}
+
+.homecareRoyalGlowOne {
+    width: 180px;
+    height: 180px;
+    right: -42px;
+    top: -58px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.homecareRoyalGlowTwo {
+    width: 190px;
+    height: 190px;
+    left: -70px;
+    bottom: -74px;
+    background: rgba(0, 191, 165, 0.38);
+}
+
+.homecareRoyalText {
+    position: absolute;
+    left: 22px;
+    top: 24px;
+    right: 160px;
+    z-index: 12;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+}
+
+.homecareRoyalText strong {
+    display: block;
+    color: #ffffff;
+    font-size: 23px;
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+    font-weight: 800;
+    text-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+    max-width: 180px;
+}
+
+.homecareRoyalText small {
+    display: block;
+    margin-top: 10px;
+    color: rgba(234, 255, 251, 0.84);
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 700;
+    max-width: 170px;
+}
+
+.homecareRoyalBadge {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    z-index: 12;
+    padding: 8px 13px;
+    border-radius: 999px;
+    color: #101014;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 26px rgba(18, 19, 23, 0.12);
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 600;
+}
+
+.homecareRoyalPhone {
+    position: absolute;
+    z-index: 7;
+    right: 30px;
+    top: 22px;
+    width: 116px;
+    height: 206px;
+    padding: 6px;
+    border-radius: 25px;
+    background:
+        linear-gradient(145deg, #5c6671 0%, #151a20 34%, #303a44 100%);
+    box-shadow:
+        inset 1px 1px 0 rgba(255, 255, 255, 0.28),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.5),
+        0 26px 58px rgba(0, 0, 0, 0.34),
+        0 0 34px rgba(0, 191, 165, 0.2);
+    transform: rotate(7deg);
+    animation: homecareRoyalPhoneFloat 5.4s ease-in-out infinite;
+}
+
+.homecareRoyalPhone::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 21px;
+    pointer-events: none;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        inset 0 0 22px rgba(255, 255, 255, 0.08);
+    z-index: 2;
+}
+
+.homecareRoyalNotch {
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    z-index: 10;
+    width: 38px;
+    height: 12px;
+    border-radius: 999px;
+    background: #05070a;
+    transform: translateX(-50%);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.14);
+}
+
+.homecareRoyalPhone img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: top center;
+    background: #eef7f5;
+}
+
+.homecareRoyalHero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 9;
+    pointer-events: none;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, transparent 52%, rgba(0, 0, 0, 0.18) 100%);
+}
+
+@keyframes homecareRoyalPhoneFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(7deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(4deg);
+    }
+}
+
+@media (max-width: 620px) {
+    .homecareRoyalText {
+        left: 18px;
+        top: 22px;
+        right: 126px;
+    }
+
+    .homecareRoyalText strong {
+        font-size: 20px;
+        max-width: 145px;
+    }
+
+    .homecareRoyalText small {
+        font-size: 11px;
+        max-width: 145px;
+    }
+
+    .homecareRoyalBadge {
+        left: 16px;
+        bottom: 16px;
+        font-size: 11px;
+        padding: 8px 12px;
+    }
+
+    .homecareRoyalPhone {
+        right: 16px;
+        top: 22px;
+        width: 104px;
+        height: 188px;
+    }
+}
+
+/* ==========================================================
+   GYM SINGLE PHONE MOCKUP - PURE DARK & NEON YELLOW THEME
+========================================================== */
+
+.gymProjectImageShell {
+    background: #111317 !important;
+}
+
+.antriankuProjectImageShell {
+    background: #0f172a !important;
+}
+
+.gymHero {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    overflow: hidden;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(220, 245, 26, 0.08), transparent 45%),
+        radial-gradient(circle at 15% 85%, rgba(41, 50, 60, 0.4), transparent 40%),
+        linear-gradient(135deg, #111317 0%, #1a1d24 50%, #0a0b0c 100%);
+}
+
+.gymGrid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image:
+        linear-gradient(rgba(220, 245, 26, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(220, 245, 26, 0.2) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at center, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 75%);
+}
+
+.gymGlowOne,
+.gymGlowTwo {
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(34px);
+}
+
+.gymGlowOne {
+    width: 200px;
+    height: 200px;
+    right: -40px;
+    top: -40px;
+    background: rgba(220, 245, 26, 0.12);
+}
+
+.gymGlowTwo {
+    width: 220px;
+    height: 220px;
+    left: -60px;
+    bottom: -60px;
+    background: rgba(220, 245, 26, 0.05);
+}
+
+.gymPlateStack {
+    position: absolute;
+    left: -20px;
+    top: 40%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0.2;
+}
+
+.gymPlateStack span {
+    display: block;
+    height: 12px;
+    width: 60px;
+    background: #4a5059 !important;
+    border-radius: 0 6px 6px 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+.gymPlateStack span:nth-child(2) { width: 50px !important; }
+.gymPlateStack span:nth-child(3) { width: 70px !important; }
+.gymPlateStack span:nth-child(4) { width: 40px !important; }
+
+/* ==========================================================
+   ANTRIANKU SINGLE PHONE MOCKUP
+========================================================== */
+
+.antriankuProjectImageShell {
+    background: #0a150e !important;
+}
+
+.antriankuHero {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    overflow: hidden;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(232, 199, 102, 0.08), transparent 45%),
+        radial-gradient(circle at 15% 85%, rgba(24, 54, 37, 0.4), transparent 40%),
+        linear-gradient(135deg, #183625 0%, #112619 50%, #060e09 100%);
+}
+
+.antriankuGlowOne,
+.antriankuGlowTwo {
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(34px);
+}
+
+.antriankuGlowOne {
+    width: 200px;
+    height: 200px;
+    right: -40px;
+    top: -40px;
+    background: rgba(232, 199, 102, 0.12);
+}
+
+.antriankuGlowTwo {
+    width: 200px;
+    height: 200px;
+    left: -60px;
+    bottom: -60px;
+    background: rgba(232, 199, 102, 0.06);
+}
+
+.antriankuMiniChip {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    z-index: 12;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: #112619;
+    background: #e8c766; 
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    box-shadow: 0 6px 16px rgba(232, 199, 102, 0.25); 
+}
+
+/* Teks Hero */
+.gymHeroText,
+.antriankuHeroText {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    right: 150px;
+    z-index: 12;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.gymHeroText small {
+    display: block;
+    color: #dcf51a; 
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+}
+
+.antriankuHeroText small {
+    display: block;
+    color: #e8c766; 
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+}
+
+.gymHeroText strong,
+.antriankuHeroText strong {
+    display: block;
+    color: #ffffff;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    font-weight: 800;
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    max-width: 240px; 
+}
+
+.gymSubText,
+.antriankuSubText {
+    display: block !important;
+    margin: 10px 0 0 0 !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    font-weight: 500 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.gymMiniChip {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    z-index: 12;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: #0a0b0c;
+    background: #dcf51a; 
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    box-shadow: 0 6px 16px rgba(220, 245, 26, 0.25); 
+}
+
+/* Animasi HP Melayang */
+.gymPhone {
+    position: absolute;
+    z-index: 10;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-6deg);
+    width: 124px;
+    height: 228px;
+    padding: 6px;
+    border-radius: 26px;
+    background: linear-gradient(145deg, #2b303b 0%, #12141a 100%);
+    box-shadow:
+        inset 1px 1px 0 rgba(255, 255, 255, 0.15),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.8),
+        0 24px 48px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(220, 245, 26, 0.12); 
+    animation: gymPhoneFloat 5.5s ease-in-out infinite;
+}
+
+.gymPhone::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 22px;
+    pointer-events: none;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 0 12px rgba(255, 255, 255, 0.04);
+    z-index: 2;
+}
+
+.gymPhoneNotch {
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    z-index: 15;
+    width: 36px;
+    height: 10px;
+    border-radius: 999px;
+    background: #050608;
+    transform: translateX(-50%);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.gymPhone img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: top center;
+    background: #1a1c23;
+    border: 1px solid rgba(220, 245, 26, 0.2); 
+}
+
+@keyframes gymPhoneFloat {
+    0%, 100% {
+        transform: translateY(-50%) rotate(-6deg);
+    }
+    50% {
+        transform: translateY(calc(-50% - 10px)) rotate(-3deg);
+    }
+}
+
+/* Responsif untuk Layar HP */
+@media (max-width: 620px) {
+    .gymHeroText {
+        left: 18px;
+        top: 20px;
+        right: 120px;
+    }
+    
+    .gymHeroText strong {
+        font-size: 20px;
+        max-width: 180px;
+    }
+    
+    .gymSubText {
+        font-size: 10px !important;
+        max-width: 130px !important;
+    }
+
+    .gymMiniChip {
+        right: 18px;
+        bottom: 18px;
+        padding: 6px 12px;
+        font-size: 9px;
+    }
+
+    .gymPhone {
+        right: 10px;
+        width: 106px;
+        height: 196px;
+        border-radius: 22px;
+    }
+    
+    .gymPhone::before {
+        border-radius: 18px;
+    }
+}

@@ -1,0 +1,149 @@
+.footerRevealWrapper {
+  position: relative;
+  height: 100vh;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  width: 100%;
+}
+
+.footerFixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.footer {
+  position: relative;
+  background-color: #ebebeb;
+  color: #1a1a1a;
+  overflow: hidden;
+  height: 100vh; /* 1 ukuran layar penuh */
+  width: 100%;
+}
+
+.hugeTextContainer {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.hugeText {
+  font-size: 11vw;
+  font-weight: 800;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.16);
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.marqueeContainer {
+  position: absolute;
+  top: 60%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  white-space: nowrap;
+}
+
+.marqueeContent {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  animation: scrollText 50s linear infinite;
+  padding-left: 20px;
+}
+
+.marqueeItem {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: #2b2b2b;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.marqueeAsterisk {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 400;
+  display: inline-block;
+  transform: translateY(6px);
+}
+
+@keyframes scrollText {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.contactInfo {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.contactLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2b2b2b;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.contactLink:hover {
+  opacity: 0.6;
+  transform: translateY(-2px);
+}
+
+.bottomBar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: min(1280px, calc(100% - 48px));
+  font-size: 13px;
+  color: #4a4a4a;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .hugeTextContainer {
+    top: 30%;
+  }
+  .hugeText {
+    font-size: 15vw;
+  }
+  .marqueeContainer {
+    top: 55%;
+  }
+  .contactInfo {
+    top: 75%;
+  }
+  .bottomBar {
+    width: calc(100% - 32px);
+    bottom: 80px; /* Leave space for the floating dock on mobile */
+  }
+}

@@ -1,0 +1,657 @@
+.aboutSection {
+  position: relative;
+  padding: 110px 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(50, 121, 249, 0.055), transparent 28%),
+    radial-gradient(circle at 88% 72%, rgba(124, 77, 255, 0.04), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcff 42%, #ffffff 100%);
+}
+
+.aboutSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(50, 121, 249, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 121, 249, 0.035) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+  opacity: 0.55;
+  will-change: background-position;
+  animation: aboutGridMove 18s linear infinite;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: min(1280px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 54px;
+  align-items: center;
+}
+
+.profileWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutContent {
+  position: relative;
+}
+
+.aboutContent h2 {
+  margin: 18px 0 0;
+  max-width: 760px;
+  color: #101014;
+  font-size: clamp(34px, 3.6vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+  font-weight: 500;
+}
+
+.aboutContent p {
+  max-width: 760px;
+  margin: 18px 0 0;
+  color: #3d3d44;
+  font-size: 18px;
+  line-height: 1.55;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.aboutInfoGrid {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.aboutInfoCard {
+  position: relative;
+  min-height: 136px;
+  padding: 20px;
+  border-radius: 26px;
+  border: 1px solid rgba(232, 235, 240, 0.95);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 251, 255, 0.9)),
+    #ffffff;
+  box-shadow:
+    0 1px 3px rgba(18, 19, 23, 0.055),
+    0 18px 48px rgba(18, 19, 23, 0.05);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  animation: cardReveal 620ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition:
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.aboutInfoCard::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(50, 121, 249, 0.11), transparent 32%),
+    radial-gradient(circle at 90% 90%, rgba(124, 77, 255, 0.06), transparent 34%);
+  opacity: 0;
+  transition: opacity 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aboutInfoCard:hover {
+  transform: translateY(-8px) scale(1.015);
+  border-color: rgba(50, 121, 249, 0.24);
+  box-shadow:
+    0 4px 10px rgba(18, 19, 23, 0.07),
+    0 28px 80px rgba(18, 19, 23, 0.11);
+}
+
+.aboutInfoCard:hover::before {
+  opacity: 1;
+}
+
+.infoIcon {
+  position: relative;
+  z-index: 40;
+  width: 44px;
+  height: 44px;
+  border-radius: 17px;
+  display: grid;
+  place-items: center;
+  color: #3279f9;
+  background: rgba(50, 121, 249, 0.1);
+  transition:
+    color 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aboutInfoCard span {
+  position: relative;
+  z-index: 40;
+  display: block;
+  margin-top: 16px;
+  color: #6a6a71;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aboutInfoCard strong {
+  position: relative;
+  z-index: 40;
+  display: block;
+  margin-top: 5px;
+  color: #101014;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  transition:
+    color 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    text-shadow 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===============================
+   SHARED PHOTO + CLOUD STYLE
+================================ */
+
+.campusCard,
+.originCard {
+  cursor: pointer;
+  min-height: 148px;
+  isolation: isolate;
+  touch-action: manipulation;
+}
+
+.campusSky,
+.originSky {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.campusSky {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.9), transparent 24%),
+    linear-gradient(180deg, #edf7ff 0%, #f7fbff 46%, #ffffff 100%);
+}
+
+.originSky {
+  background:
+    radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.86), transparent 24%),
+    radial-gradient(circle at 84% 16%, rgba(255, 206, 130, 0.28), transparent 32%),
+    linear-gradient(180deg, #fff5e7 0%, #fbf5ee 45%, #ffffff 100%);
+}
+
+.campusPhotoScene,
+.originPhotoScene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1) 360ms,
+    transform 1850ms cubic-bezier(0.16, 1, 0.3, 1) 360ms;
+}
+
+.campusPhoto,
+.originPhoto {
+  position: absolute;
+  inset: -32%;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0;
+  transform: scale(1.2);
+  filter: saturate(1.03) contrast(1.03) brightness(0.92);
+  will-change: transform, opacity;
+  transition:
+    opacity 950ms cubic-bezier(0.16, 1, 0.3, 1) 520ms,
+    transform 2100ms cubic-bezier(0.16, 1, 0.3, 1) 480ms,
+    filter 1600ms cubic-bezier(0.16, 1, 0.3, 1) 520ms;
+}
+
+.campusPhoto {
+  background-image: url("/campus/unpri.jpg");
+}
+
+.originPhoto {
+  background-image: url("/asal/medan.jpg");
+}
+
+/* Awan dibuat lebih kelihatan: bukan putih polos */
+.campusCloudCenter,
+.campusCloudLeft,
+.campusCloudRight,
+.campusCloudTop,
+.campusCloudBottom,
+.originCloudCenter,
+.originCloudLeft,
+.originCloudRight,
+.originCloudTop,
+.originCloudBottom {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0;
+  filter: blur(7px);
+  background:
+    radial-gradient(circle at 12% 52%, rgba(255, 255, 255, 1) 0 18%, transparent 19%),
+    radial-gradient(circle at 28% 42%, rgba(255, 255, 255, 0.98) 0 28%, transparent 29%),
+    radial-gradient(circle at 48% 55%, rgba(255, 255, 255, 0.96) 0 25%, transparent 26%),
+    radial-gradient(circle at 68% 47%, rgba(248, 252, 255, 0.94) 0 23%, transparent 24%),
+    radial-gradient(circle at 86% 58%, rgba(234, 244, 255, 0.9) 0 18%, transparent 19%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(210, 225, 242, 0.42));
+  box-shadow:
+    0 12px 26px rgba(98, 123, 160, 0.22),
+    0 0 24px rgba(255, 255, 255, 0.7),
+    inset 0 -12px 22px rgba(155, 175, 205, 0.18);
+}
+
+/* awan besar awal di tengah supaya animasi kebaca */
+.campusCloudCenter,
+.originCloudCenter {
+  z-index: 22;
+  width: 410px;
+  height: 138px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -48%) scale(1.05);
+  transition:
+    opacity 520ms cubic-bezier(0.16, 1, 0.3, 1) 80ms,
+    transform 1550ms cubic-bezier(0.16, 1, 0.3, 1) 320ms,
+    filter 1550ms cubic-bezier(0.16, 1, 0.3, 1) 320ms;
+}
+
+.campusCloudLeft,
+.originCloudLeft {
+  z-index: 20;
+  width: 310px;
+  height: 112px;
+  left: -50px;
+  top: 26px;
+  transform: translateX(72px) scale(1.08);
+  transition:
+    opacity 540ms cubic-bezier(0.16, 1, 0.3, 1) 120ms,
+    transform 1700ms cubic-bezier(0.16, 1, 0.3, 1) 360ms,
+    filter 1700ms cubic-bezier(0.16, 1, 0.3, 1) 360ms;
+}
+
+.campusCloudRight,
+.originCloudRight {
+  z-index: 20;
+  width: 320px;
+  height: 116px;
+  right: -58px;
+  top: 26px;
+  transform: translateX(-72px) scale(1.08);
+  transition:
+    opacity 540ms cubic-bezier(0.16, 1, 0.3, 1) 140ms,
+    transform 1700ms cubic-bezier(0.16, 1, 0.3, 1) 380ms,
+    filter 1700ms cubic-bezier(0.16, 1, 0.3, 1) 380ms;
+}
+
+.campusCloudTop,
+.originCloudTop {
+  z-index: 19;
+  width: 430px;
+  height: 128px;
+  left: 50%;
+  top: -72px;
+  transform: translateX(-50%) translateY(58px) scale(1.08);
+  transition:
+    opacity 560ms cubic-bezier(0.16, 1, 0.3, 1) 180ms,
+    transform 1800ms cubic-bezier(0.16, 1, 0.3, 1) 440ms,
+    filter 1800ms cubic-bezier(0.16, 1, 0.3, 1) 440ms;
+}
+
+.campusCloudBottom,
+.originCloudBottom {
+  z-index: 19;
+  width: 450px;
+  height: 132px;
+  left: 50%;
+  bottom: -74px;
+  transform: translateX(-50%) translateY(-54px) scale(1.08);
+  transition:
+    opacity 560ms cubic-bezier(0.16, 1, 0.3, 1) 200ms,
+    transform 1800ms cubic-bezier(0.16, 1, 0.3, 1) 480ms,
+    filter 1800ms cubic-bezier(0.16, 1, 0.3, 1) 480ms;
+}
+
+.campusOverlay,
+.originOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1) 680ms;
+}
+
+.campusOverlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 16, 28, 0.03) 0%,
+      rgba(10, 16, 28, 0.14) 48%,
+      rgba(10, 16, 28, 0.62) 100%
+    ),
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.28), transparent 34%);
+}
+
+.originOverlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(12, 14, 20, 0.03) 0%,
+      rgba(12, 14, 20, 0.16) 50%,
+      rgba(12, 14, 20, 0.62) 100%
+    ),
+    radial-gradient(circle at 78% 16%, rgba(255, 214, 150, 0.22), transparent 34%);
+}
+
+.campusSun,
+.originSun {
+  position: absolute;
+  right: 18px;
+  top: 14px;
+  z-index: 13;
+  width: 84px;
+  height: 84px;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0;
+  transform: scale(0.7);
+  filter: blur(14px);
+  mix-blend-mode: screen;
+  transition:
+    opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1) 620ms,
+    transform 1500ms cubic-bezier(0.16, 1, 0.3, 1) 620ms;
+}
+
+.campusSun {
+  background:
+    radial-gradient(circle, rgba(255, 255, 235, 0.58), rgba(255, 226, 165, 0.16) 38%, transparent 70%);
+}
+
+.originSun {
+  background:
+    radial-gradient(circle, rgba(255, 225, 170, 0.62), rgba(255, 160, 90, 0.16) 42%, transparent 72%);
+}
+
+/* ===============================
+   ACTIVE STATE: KAMPUS
+================================ */
+
+.campusCard:hover .campusSky,
+.campusTapActive .campusSky,
+.originCard:hover .originSky,
+.originTapActive .originSky {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.campusCard:hover .campusPhotoScene,
+.campusTapActive .campusPhotoScene,
+.originCard:hover .originPhotoScene,
+.originTapActive .originPhotoScene {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.campusCard:hover .campusPhoto,
+.campusTapActive .campusPhoto,
+.originCard:hover .originPhoto,
+.originTapActive .originPhoto {
+  opacity: 1;
+  transform: scale(1.035);
+  filter: saturate(1.06) contrast(1.05) brightness(0.97) blur(0);
+}
+
+/* awan tengah muncul, lalu pecah dan menipis */
+.campusCard:hover .campusCloudCenter,
+.campusTapActive .campusCloudCenter,
+.originCard:hover .originCloudCenter,
+.originTapActive .originCloudCenter {
+  opacity: 0.08;
+  transform: translate(-50%, -48%) scale(1.34);
+  filter: blur(22px);
+}
+
+.campusCard:hover .campusCloudLeft,
+.campusTapActive .campusCloudLeft,
+.originCard:hover .originCloudLeft,
+.originTapActive .originCloudLeft {
+  opacity: 0.42;
+  transform: translateX(-138px) translateY(-8px) scale(1.03);
+  filter: blur(10px);
+  animation: cloudLeftFloat 5.4s ease-in-out infinite alternate 1.5s;
+}
+
+.campusCard:hover .campusCloudRight,
+.campusTapActive .campusCloudRight,
+.originCard:hover .originCloudRight,
+.originTapActive .originCloudRight {
+  opacity: 0.42;
+  transform: translateX(142px) translateY(-8px) scale(1.03);
+  filter: blur(10px);
+  animation: cloudRightFloat 5.6s ease-in-out infinite alternate 1.5s;
+}
+
+.campusCard:hover .campusCloudTop,
+.campusTapActive .campusCloudTop,
+.originCard:hover .originCloudTop,
+.originTapActive .originCloudTop {
+  opacity: 0.36;
+  transform: translateX(-50%) translateY(-62px) scale(1.02);
+  filter: blur(12px);
+}
+
+.campusCard:hover .campusCloudBottom,
+.campusTapActive .campusCloudBottom,
+.originCard:hover .originCloudBottom,
+.originTapActive .originCloudBottom {
+  opacity: 0.34;
+  transform: translateX(-50%) translateY(58px) scale(1.02);
+  filter: blur(12px);
+}
+
+.campusCard:hover .campusOverlay,
+.campusTapActive .campusOverlay,
+.originCard:hover .originOverlay,
+.originTapActive .originOverlay {
+  opacity: 1;
+}
+
+.campusCard:hover .campusSun,
+.campusTapActive .campusSun,
+.originCard:hover .originSun,
+.originTapActive .originSun {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Text/icon berubah untuk dua card */
+.campusCard:hover .infoIcon,
+.campusTapActive .infoIcon,
+.originCard:hover .infoIcon,
+.originTapActive .infoIcon {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px) scale(1.04);
+  backdrop-filter: blur(12px);
+}
+
+.campusCard:hover span,
+.campusTapActive span,
+.originCard:hover span,
+.originTapActive span {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.campusCard:hover strong,
+.campusTapActive strong,
+.originCard:hover strong,
+.originTapActive strong {
+  color: #ffffff;
+  text-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
+}
+
+@keyframes cloudLeftFloat {
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    translate: -10px -4px;
+  }
+}
+
+@keyframes cloudRightFloat {
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    translate: 10px 4px;
+  }
+}
+
+@keyframes aboutGridMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 58px 58px;
+  }
+}
+
+@keyframes aboutReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 980px) {
+  .aboutGrid {
+    grid-template-columns: 1fr;
+    gap: 46px;
+  }
+
+  .profileWrap {
+    order: 1;
+  }
+
+  .aboutContent {
+    order: 2;
+  }
+
+  .aboutContent h2,
+  .aboutContent p {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .aboutSection {
+    padding: 76px 0;
+  }
+
+  .container {
+    width: min(100% - 32px, 1280px);
+  }
+
+  .aboutGrid {
+    gap: 36px;
+  }
+
+  .aboutContent h2 {
+    font-size: clamp(29px, 8.2vw, 42px);
+    line-height: 1.08;
+  }
+
+  .aboutContent p {
+    font-size: 15.5px;
+    line-height: 1.58;
+  }
+
+  .aboutInfoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutInfoCard {
+    min-height: 136px;
+  }
+
+  .campusCard,
+  .originCard {
+    min-height: 150px;
+  }
+
+  .campusPhoto,
+  .originPhoto {
+    inset: -36%;
+  }
+
+  .campusCloudCenter,
+  .originCloudCenter {
+    width: 430px;
+    height: 148px;
+  }
+
+  .campusCloudLeft,
+  .originCloudLeft {
+    width: 330px;
+    height: 122px;
+  }
+
+  .campusCloudRight,
+  .originCloudRight {
+    width: 340px;
+    height: 126px;
+  }
+
+  .campusCloudTop,
+  .originCloudTop {
+    width: 460px;
+  }
+
+  .campusCloudBottom,
+  .originCloudBottom {
+    width: 480px;
+  }
+}
