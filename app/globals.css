@@ -204,6 +204,41 @@ body.theme-dark-header .lang-btn.active {
   box-shadow: 0 12px 32px rgba(50, 121, 249, 0.3);
 }
 
+.cv-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  font-size: 14.5px;
+  margin-right: 8px;
+  transition: all 220ms ease;
+  white-space: nowrap;
+}
+
+.cv-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+body.theme-dark-header .cv-nav-btn {
+  color: var(--text-soft);
+  background: rgba(18, 19, 23, 0.05);
+  border-color: rgba(18, 19, 23, 0.15);
+}
+
+body.theme-dark-header .cv-nav-btn:hover {
+  background: rgba(18, 19, 23, 0.08);
+  color: var(--text);
+  border-color: rgba(18, 19, 23, 0.25);
+}
+
 @media (max-width: 768px) {
   .header {
     width: max-content;
@@ -222,7 +257,7 @@ body.theme-dark-header .lang-btn.active {
   }
 
   /* Hide desktop nav and contact button on mobile */
-  .nav, .contact-btn {
+  .nav, .contact-btn, .cv-nav-btn {
     display: none;
   }
 

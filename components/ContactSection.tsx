@@ -62,10 +62,10 @@ export default function ContactSection() {
               )}
             </p>
             <div style={{ marginTop: "40px" }}>
-              <Link href="/cv" target="_blank" className={styles.cvBtn}>
+              <a href="/CV/CV.pdf" target="_blank" download="CV_Ferdinand_Sianturi.pdf" className={styles.cvBtn}>
                 <Download size={18} />
                 {lang === "id" ? "Download / Lihat CV" : "Download / View CV"}
-              </Link>
+              </a>
             </div>
           </div>
 
