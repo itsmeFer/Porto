@@ -465,5 +465,18 @@
   .timelineContent {
     padding-left: 0;
   }
+
+  .gateText {
+    font-size: clamp(18px, 5vw, 24px);
+    letter-spacing: 2px;
+  }
+
+  .gateTextLeft {
+    right: 10px;
+  }
+
+  .gateTextRight {
+    left: 10px;
+  }
 }
 

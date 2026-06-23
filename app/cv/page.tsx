@@ -46,10 +46,10 @@ export default function CVPage() {
       <div className={styles.cvPageWrapper}>
       {/* Controls: Language and Download */}
       <div className={styles.cvControls}>
-        <Link href="/" className={styles.backBtn}>
+        <a href="https://www.ferdinandsianturi.my.id/" className={styles.backBtn}>
           <ArrowLeft size={18} />
           {lang === "id" ? "Kembali" : "Back"}
-        </Link>
+        </a>
         <div className={styles.controlGroup}>
           <button
             className={`${styles.langBtn} ${lang === "id" ? styles.active : ""}`}
