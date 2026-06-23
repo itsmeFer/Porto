@@ -30,6 +30,7 @@ export default function SmoothScroller() {
         if (rect.bottom < 0) {
           htmlEl.style.opacity = "1";
           htmlEl.style.transform = "none";
+          htmlEl.style.removeProperty("filter");
           return;
         }
 
@@ -37,6 +38,7 @@ export default function SmoothScroller() {
         if (rect.top > vh) {
           htmlEl.style.opacity = "0";
           htmlEl.style.transform = "translateY(30px) scale(0.985)";
+          htmlEl.style.removeProperty("filter");
         } else {
           // Element is entering the viewport
           const distanceEntered = vh - rect.top;
@@ -46,10 +48,12 @@ export default function SmoothScroller() {
             // Smoothly calculate styles based on actual progress
             htmlEl.style.opacity = progress.toFixed(3);
             htmlEl.style.transform = `translateY(${(30 * (1 - progress)).toFixed(2)}px) scale(${(0.985 + 0.015 * progress).toFixed(4)})`;
+            htmlEl.style.removeProperty("filter");
           } else {
             // Fully visible
             htmlEl.style.opacity = "1";
             htmlEl.style.transform = "none";
+            htmlEl.style.removeProperty("filter");
           }
         }
       });
