@@ -1610,22 +1610,19 @@ body.theme-dark-header .mobile-toggle-btn {
 .reveal {
   opacity: 0;
   transform: translateY(30px) scale(0.985);
-  filter: blur(8px);
-  will-change: opacity, transform, filter;
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes heroFadeUp {
   from {
     opacity: 0;
     transform: translateY(26px) scale(0.98);
-    filter: blur(8px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
   }
 }
 
@@ -1633,13 +1630,11 @@ body.theme-dark-header .mobile-toggle-btn {
   from {
     opacity: 0;
     transform: translateY(42px) scale(0.985);
-    filter: blur(8px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
   }
 }
 
@@ -1848,13 +1843,11 @@ body.theme-dark-header .mobile-toggle-btn {
   from {
     opacity: 0;
     transform: translateY(30px) scale(0.985);
-    filter: blur(8px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
   }
 }
 
@@ -1864,25 +1857,21 @@ body.theme-dark-header .mobile-toggle-btn {
   0% {
     opacity: 0;
     transform: translate3d(-38px, 80px, 0) rotateX(8deg) rotateY(-7deg) scale(0.94);
-    filter: blur(14px);
   }
 
   28% {
     opacity: 1;
     transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
-    filter: blur(0);
   }
 
   64% {
     opacity: 1;
     transform: translate3d(0, -18px, 0) rotateX(0deg) rotateY(1.6deg) scale(1.015);
-    filter: blur(0);
   }
 
   100% {
     opacity: 0.96;
     transform: translate3d(0, -44px, 0) rotateX(-2deg) rotateY(3deg) scale(1.025);
-    filter: blur(0);
   }
 }
 
