@@ -1726,20 +1726,35 @@
         border-radius: 18px;
     }
 
-    /* MATIKAN FITUR BERAT DI HP UNTUK MENCEGAH LAG */
-    .projectsSliderSection :global(.project-card) {
-        backdrop-filter: none !important; /* Biang kerok lag utama */
-        background: #1c1c1e !important; /* Pakai warna solid, jangan transparan */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important; /* Shadow ringan */
+    /* MATIKAN SEMUA ANIMASI 3D DI SLIDER UNTUK HP (SUPER FRIENDLY & ANTI-LAG) */
+    .projectSliderStage {
+        height: auto !important;
+        perspective: none !important;
+        display: block !important;
+        padding-bottom: 24px !important;
     }
 
     .projectSlideCard {
-        will-change: auto !important; /* Hemat memori GPU */
-        transition: transform 0.4s ease, opacity 0.4s ease !important; /* Transisi lebih simpel */
+        position: relative !important;
+        width: 100% !important;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+        background: #1c1c1e !important;
+        pointer-events: auto !important;
+        display: none !important; /* Sembunyikan semua kartu secara default */
+        will-change: auto !important;
+        transition: none !important; /* Matikan semua transisi */
     }
 
+    .projectSlideCard.isActive {
+        display: block !important; /* Hanya tampilkan kartu yang aktif */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Sembunyikan tanda panah samping di dalam slider stage jika berbenturan, tapi kita biarkan saja tombol utamanya */
     .scrollRevealText {
-        animation-timeline: auto !important; /* Matikan efek scroll timeline berat */
         animation: none !important;
         background: none !important;
         -webkit-text-fill-color: rgba(255, 255, 255, 0.8) !important;

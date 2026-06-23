@@ -649,9 +649,8 @@ body.theme-dark-header .mobile-toggle-btn {
   margin-bottom: 42px;
   opacity: 0;
   transform: translateY(30px) scale(0.985);
-  filter: blur(8px);
-  will-change: opacity, transform, filter;
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .section-label {
