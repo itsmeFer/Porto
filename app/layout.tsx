@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Poppins, Caveat } from "next/font/google";
 import "./globals.css";
 import SmoothScroller from "../components/SmoothScroller";
-import Preloader from "../components/Preloader";
-
 import { LanguageProvider } from "../context/LanguageContext";
 
 const poppins = Poppins({
@@ -31,7 +29,6 @@ export default function RootLayout({
     <html lang="id" suppressHydrationWarning>
       <body className={`${poppins.variable} ${caveat.variable}`} suppressHydrationWarning>
         <LanguageProvider>
-          <Preloader />
           <SmoothScroller />
           {children}
         </LanguageProvider>

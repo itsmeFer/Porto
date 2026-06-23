@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import styles from "./Preloader.module.css";
 
 const GREETINGS = [
@@ -15,16 +14,13 @@ const GREETINGS = [
 ];
 
 export default function Preloader() {
-  const pathname = usePathname();
   const [index, setIndex] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isFading, setIsFading] = useState(false);
   const [isSliding, setIsSliding] = useState(false);
-  const [isUnmounted, setIsUnmounted] = useState(pathname === "/cv");
+  const [isUnmounted, setIsUnmounted] = useState(false);
 
   useEffect(() => {
-    if (pathname === "/cv") return;
-    
     document.body.style.overflow = "hidden";
     let isCancelled = false;
 
