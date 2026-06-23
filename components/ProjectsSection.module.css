@@ -1725,4 +1725,24 @@
     .gymPhone::before {
         border-radius: 18px;
     }
+
+    /* MATIKAN FITUR BERAT DI HP UNTUK MENCEGAH LAG */
+    .projectsSliderSection :global(.project-card) {
+        backdrop-filter: none !important; /* Biang kerok lag utama */
+        background: #1c1c1e !important; /* Pakai warna solid, jangan transparan */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important; /* Shadow ringan */
+    }
+
+    .projectSlideCard {
+        will-change: auto !important; /* Hemat memori GPU */
+        transition: transform 0.4s ease, opacity 0.4s ease !important; /* Transisi lebih simpel */
+    }
+
+    .scrollRevealText {
+        animation-timeline: auto !important; /* Matikan efek scroll timeline berat */
+        animation: none !important;
+        background: none !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.8) !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
 }
