@@ -29,7 +29,6 @@ export default function SmoothScroller() {
         // If the element has scrolled past the top of the viewport, keep it visible
         if (rect.bottom < 0) {
           htmlEl.style.opacity = "1";
-          htmlEl.style.filter = "none";
           htmlEl.style.transform = "none";
           return;
         }
@@ -37,7 +36,6 @@ export default function SmoothScroller() {
         // If the element is still below the viewport bottom
         if (rect.top > vh) {
           htmlEl.style.opacity = "0";
-          htmlEl.style.filter = "blur(8px)";
           htmlEl.style.transform = "translateY(30px) scale(0.985)";
         } else {
           // Element is entering the viewport
@@ -47,12 +45,10 @@ export default function SmoothScroller() {
             const progress = distanceEntered / transitionRange;
             // Smoothly calculate styles based on actual progress
             htmlEl.style.opacity = progress.toFixed(3);
-            htmlEl.style.filter = `blur(${(8 * (1 - progress)).toFixed(2)}px)`;
             htmlEl.style.transform = `translateY(${(30 * (1 - progress)).toFixed(2)}px) scale(${(0.985 + 0.015 * progress).toFixed(4)})`;
           } else {
             // Fully visible
             htmlEl.style.opacity = "1";
-            htmlEl.style.filter = "none";
             htmlEl.style.transform = "none";
           }
         }
