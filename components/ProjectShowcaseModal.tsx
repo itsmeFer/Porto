@@ -132,6 +132,7 @@ export default function ProjectShowcaseModal({
   if (!shouldRender) return null;
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
     const rect = event.currentTarget.getBoundingClientRect();
 
     const x = (event.clientX - rect.left) / rect.width;
@@ -148,6 +149,7 @@ export default function ProjectShowcaseModal({
   };
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
     event.preventDefault();
 
     setZoom((current) => {
