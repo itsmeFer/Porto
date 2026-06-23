@@ -1,9 +1,10 @@
 "use client";
 
-import { Home, Menu, X, Download } from "lucide-react";
+import { Home, Menu, X, Download, FileText } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../data/translations";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Header() {
   const { lang, setLang } = useLanguage();
@@ -44,10 +45,10 @@ export default function Header() {
             </button>
           </div>
 
-          <a href="/CV/CV.pdf" download="CV_Ferdinand_Sianturi.pdf" className="cv-nav-btn">
-            <Download size={16} />
-            CV
-          </a>
+          <Link href="/cv" className="cv-nav-btn">
+            <FileText size={16} />
+            {lang === "id" ? "Lihat CV" : "View CV"}
+          </Link>
 
           <a href="#contact" className="contact-btn">
             {t.contactBtn}
@@ -73,10 +74,10 @@ export default function Header() {
       </nav>
       
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '16px' }}>
-        <a href="/CV/CV.pdf" download="CV_Ferdinand_Sianturi.pdf" className="btn" style={{ border: '1px solid var(--border)', color: 'var(--text)' }} onClick={closeMenu}>
-          <Download size={18} />
-          {lang === "id" ? "Download CV" : "Download CV"}
-        </a>
+        <Link href="/cv" className="btn" style={{ border: '1px solid var(--border)', color: 'var(--text)' }} onClick={closeMenu}>
+          <FileText size={18} />
+          {lang === "id" ? "Lihat CV" : "View CV"}
+        </Link>
         <a href="#contact" className="btn btn-primary" onClick={closeMenu}>
           {t.contactBtn}
         </a>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, FileText } from "lucide-react";
 import styles from "./ContactSection.module.css";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../data/translations";
@@ -62,10 +62,10 @@ export default function ContactSection() {
               )}
             </p>
             <div style={{ marginTop: "40px" }}>
-              <a href="/CV/CV.pdf" target="_blank" download="CV_Ferdinand_Sianturi.pdf" className={styles.cvBtn}>
-                <Download size={18} />
-                {lang === "id" ? "Download / Lihat CV" : "Download / View CV"}
-              </a>
+              <Link href="/cv" className={styles.cvBtn}>
+                <FileText size={18} />
+                {lang === "id" ? "Lihat CV" : "View CV"}
+              </Link>
             </div>
           </div>
 

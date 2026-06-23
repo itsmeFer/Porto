@@ -1,0 +1,469 @@
+/* CV Entry Gate */
+.pageGate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+}
+
+.gatePointerNone {
+  pointer-events: none;
+}
+
+.gatePanel {
+  width: 50.1vw;
+  height: 100vh;
+  background: #111112;
+  transition: transform 1800ms cubic-bezier(0.85, 0, 0.15, 1);
+  will-change: transform;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gatePanelLeft {
+  justify-content: flex-end;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gatePanelRight {
+  justify-content: flex-start;
+}
+
+.gateOpenLeft {
+  transform: translateX(-100%);
+}
+
+.gateOpenRight {
+  transform: translateX(100%);
+}
+
+.gateText {
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 300;
+  letter-spacing: 4px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 400ms ease, filter 400ms ease;
+  white-space: nowrap;
+  margin: 0;
+  animation: textEntrance 800ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes textEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(-30%);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%);
+    filter: blur(0px);
+  }
+}
+
+.gateTextLeft {
+  right: 20px;
+}
+
+.gateTextRight {
+  left: 20px;
+}
+
+.gateTextFade {
+  opacity: 0 !important;
+  filter: blur(4px) !important;
+}
+
+.cvPageWrapper {
+  min-height: 100vh;
+  padding: 120px 20px 60px;
+  background-color: var(--background, #0a0b0c);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #1a1a1a;
+  font-family: var(--font-poppins), sans-serif;
+}
+
+.cvControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 40px;
+  justify-content: center;
+  width: 100%;
+  max-width: 840px;
+}
+
+.controlGroup {
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #a0a0a0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.backBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.langBtn {
+  background: transparent;
+  color: #888;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.langBtn.active {
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.langBtn:hover:not(.active) {
+  color: #dddddd;
+}
+
+.downloadBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  color: #000000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.downloadBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}
+
+.cvContainer {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 840px;
+  border-radius: 16px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  padding: 60px 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header Section */
+.headerSection {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 50px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profileImageWrap {
+  width: 130px;
+  height: 130px;
+  border-radius: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.headerInfo {
+  flex-grow: 1;
+}
+
+.headerInfo h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.5px;
+}
+
+.headerInfo h2 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #666666;
+  margin: 0 0 24px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 20px;
+  font-size: 12px;
+  color: #555555;
+  font-weight: 400;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contactItem svg {
+  color: #888888;
+}
+
+.contactItem a {
+  color: #555555;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contactItem a:hover {
+  color: #111111;
+}
+
+/* Common Section Styles */
+.section {
+  margin-bottom: 35px;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #111111;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sectionTitle::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background: #f0f0f0;
+}
+
+.sectionContent {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #444444;
+  text-align: justify;
+}
+
+/* Education Timeline */
+.timelineItem {
+  display: flex;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.timelineItem:last-child {
+  margin-bottom: 0;
+}
+
+.timelineYear {
+  width: 100px;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #666666;
+  font-size: 13px;
+  text-align: right;
+  padding-right: 24px;
+  position: relative;
+}
+
+.timelineYear::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  background-color: #111111;
+  border-radius: 50%;
+  z-index: 2;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px #e0e0e0;
+}
+
+.timelineYear::before {
+  content: '';
+  position: absolute;
+  right: 0px;
+  top: 15px;
+  bottom: -32px;
+  width: 1px;
+  background-color: #eaeaea;
+  z-index: 1;
+}
+
+.timelineItem:last-child .timelineYear::before {
+  display: none;
+}
+
+.timelineContent {
+  padding-left: 24px;
+  flex-grow: 1;
+}
+
+.timelineTitle {
+  font-weight: 600;
+  color: #111111;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.timelineDetails {
+  font-size: 12px;
+  color: #555555;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* Projects Grid */
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.projectItem {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.projectItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  background: #ffffff;
+  border-color: #e5e5e5;
+}
+
+.projectIcon {
+  color: #333333;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.projectContent h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0 0 8px 0;
+}
+
+.projectContent p {
+  margin: 0;
+  font-size: 11.5px;
+  color: #555555;
+  line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cvPageWrapper {
+    padding: 90px 15px 40px;
+  }
+
+  .cvContainer {
+    padding: 40px 25px;
+    border-radius: 12px;
+  }
+
+  .headerSection {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .profileImageWrap {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+  }
+
+  .contactGrid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 12px;
+  }
+
+  .projectsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .timelineItem {
+    flex-direction: column;
+  }
+
+  .timelineYear {
+    width: 100%;
+    text-align: left;
+    padding-right: 0;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .timelineYear::after, .timelineYear::before {
+    display: none;
+  }
+
+  .timelineContent {
+    padding-left: 0;
+  }
+}
+
